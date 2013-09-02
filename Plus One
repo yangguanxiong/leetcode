@@ -1,0 +1,29 @@
+ public static int[] plusOneRecursion(int[] digits){
+		 
+		 return plusOneRecursion(digits, 0);
+		
+		 
+	 }
+	 
+	 public static int[] plusOneRecursion(int[] digits, int carry){
+		 
+		 if (digits[digits.length -1] < 9){
+			 digits[digits.length -1] ++;
+			 return digits;
+		 }
+		 if (digits.length ==1){
+			 return new int[]{1,0};
+		 }
+		 
+		 int[] subresult = plusOneRecursion(Arrays.copyOfRange(digits, 0, digits.length - 1), 1);
+		 
+		 int[] result = new int[subresult.length + 1];
+		 
+		 for (int i = 0; i < subresult.length; i++){
+			 result[i] = subresult[i];
+			 
+		 }
+		 result[result.length -1] = 0;
+		 return result;
+		 
+	 }
