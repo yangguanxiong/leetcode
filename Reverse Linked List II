@@ -1,0 +1,46 @@
+ public ListNode reverseBetween(ListNode head, int m, int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        
+        ListNode r1 = head;
+        int t = m;
+        while( t > 1) {
+            r1 = r1.next;
+            t--;
+        }
+        
+       ListNode[] subresult = reverseList(r1, n-m+1);
+        
+        
+        
+        
+    }
+    
+    public ListNode[] reverseList(ListNode head, int k){
+        
+        ListNode[] result = new ListNode[2];
+        if ( k == 1) {
+           result [1] = head;
+           result [0] = head;
+           return result;
+        
+        }
+        
+        ListNode r1 = head;
+        ListNode r2 = head.next;
+        
+        
+       
+            while (k > 0) {
+                ListNode r3 = r2.next;
+                r2.next = r1;
+                r1 = r2;
+                r2 = r3;
+                k--;
+            }
+            
+            
+       
+        
+        
+    }
