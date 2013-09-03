@@ -1,0 +1,34 @@
+public ListNode swapPairs(ListNode head) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if ( head == null ) return null;
+        if ( head.next == null ) return head;
+        
+        ListNode n1 = head;
+        ListNode n2 = n1.next;
+        
+        ListNode newhead = n1.next;
+        
+        while (n1 != null && n2 != null){
+            
+            if (n2.next == null){
+                n1.next = null;
+            } else {
+                n1.next = n2.next;//?
+            }
+             
+             n2.next = n1; 
+             
+             n1 = n1.next;
+             if ( n1.next == null ) {
+                 break;
+             } else {
+                 n2 = n1.next;
+             }
+             
+        }
+        
+        return newhead;
+       
+        
+    }
