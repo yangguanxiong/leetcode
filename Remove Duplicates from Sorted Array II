@@ -1,0 +1,47 @@
+public int removeDuplicates(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if ( A.length <= 2 ) {
+            return A.length;
+        }
+        
+        int slow = 0; 
+        int fast = 1;
+        boolean flag = false;
+        int key = A[slow];
+        
+        while ( fast < A.length) {
+            
+        	if (A[fast] != key){
+        		slow ++;
+        		
+        		key = A[fast];
+        		A[slow] = key;
+        		fast++;
+        		flag = false;
+        	} else {
+        		if (flag == false){
+        			slow ++;
+        			A[slow] = key;
+        			fast ++;
+        			flag = true;
+        		} else {
+
+        			while(A[fast] == key){
+        				fast ++;
+                        if (fast == A.length){
+            				return slow + 1;
+        				}
+        				
+        			}
+        			key = A[fast];
+        			slow ++;
+        			A[slow] = key;
+        			fast ++;
+        			flag = false;
+        		}
+        	}
+        	
+        }
+        return slow + 1;	
+        
