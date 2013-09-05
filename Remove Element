@@ -1,0 +1,28 @@
+ public int removeElement(int[] A, int elem) {
+        
+        
+        if ( A.length == 0 ) return 0;
+        
+        
+        int count = 0; 
+        
+        for (int i = 0 ; i < A.length  - count; i++){
+            if (A[i] == elem){
+                while (A[A.length -1 - count] == A[i]){
+                    count ++;
+                    if (count + i == A.length){
+                        return i;
+                    }
+
+                }
+                
+                //swap
+                int tmp = A[A.length -1 - count];
+                A[A.length -1-count] = A[i];
+                A[i] = tmp; 
+                count++;
+            }
+            
+        }
+        return A.length - count;
+    }
