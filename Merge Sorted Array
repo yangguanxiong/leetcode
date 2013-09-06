@@ -1,0 +1,19 @@
+ public void merge(int A[], int m, int B[], int n) {
+        
+        int end = m + n - 1;
+        int ra = m - 1;
+        int rb = n - 1;
+        
+        while ( ra >= 0 && rb >= 0 ){
+            if (A[ra] > B[rb]){
+                A[end--] = A[ra--];
+            } else {
+                A[end--] = B[rb--];
+            }
+        } 
+        while (rb >= 0 ){
+            A[end--] = B[rb--];
+        }
+        
+      
+    }
