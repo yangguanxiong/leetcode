@@ -1,0 +1,41 @@
+public String countAndSay(int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if ( n <=0 ) return "";
+        if ( n == 1) return "1";
+        
+        return readString(countAndSay(n - 1)); 
+        
+    }
+    
+    public String readString(String s){
+        
+       int l = s.length();
+            if (l == 1) return "11";
+	        String r = "";
+	        
+	        int count = 0;
+	        
+	        for (int i = 0; i < s.length() ; i+=count){
+	            char c = s.charAt(i);
+	             count = 1;
+	             
+	            if  (i + count < l){
+	            	while(s.charAt(i+count) == c){
+		                count++;
+		                if (i + count == l){
+		                    break;
+		                    
+		                }
+		            }
+	            }
+	            
+	            r += Integer.toString(count);
+	            r += c;
+	          
+	            
+	        }
+	        
+	        return r;
+        
+    }
