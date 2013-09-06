@@ -1,0 +1,28 @@
+ public int searchInsert(int[] A, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if (A.length == 0 ) return 0;
+        if (A[0] >= target) return 0;
+        if (A[A.length-1] < target) return A.length;
+        
+        if (A.length == 1){
+            if (A[0] >= target) return 0;
+            return 1;
+        }
+        
+        int mid = A.length/2;
+        
+        if (A[mid] == target){
+            return mid;
+        }
+        
+        if (A[mid] > target){
+            int[] Asub = Arrays.copyOfRange(A, 0, mid);
+            return searchInsert(Asub, target);
+            
+        } else {
+            int[] Asub = Arrays.copyOfRange(A, mid, A.length);
+            return mid + searchInsert(Asub, target);
+        }
+        
+    }
