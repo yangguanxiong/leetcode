@@ -1,0 +1,49 @@
+public int search(int[] A, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if (A.length == 0 ) return -1;
+        if (A.length == 1 ){
+            if (A[0] == target) {
+                return 0;
+            }else{
+                return -1;
+            }
+        } 
+        int mid = A.length/2;
+        if ( A[mid] == target) return mid;
+        
+        int l = 0;
+        int r = A.length -1;
+        
+        if (A[l] < A[mid]){
+            //first half in ascend order
+            if ( A[mid] > target && A[l] <= target){
+                //searh first half
+                int[] Asub = Arrays.copyOfRange(A, 0, mid);
+                return search(Asub, target);
+            } else {
+                //search second half
+                int[] Asub = Arrays.copyOfRange(A, mid + 1, A.length);
+                int result = search(Asub,target);
+                if (result == -1){
+                    return -1;
+                }
+                return mid + 1 + result;
+            }
+        } else {
+            //second half in ascend order
+            if (A[mid] < target && A[r] >= target){
+                int[] Asub = Arrays.copyOfRange(A, mid +1, A.length);
+                int result = search(Asub,target);
+                if (result == -1){
+                    return -1;
+                }
+                return mid + 1 + result;
+            } else {
+                int[] Asub = Arrays.copyOfRange(A, 0, mid);
+                return search(Asub, target);
+            }
+            
+        }
+        
+    }
