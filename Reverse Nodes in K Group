@@ -1,0 +1,35 @@
+public ListNode reverseKGroup(ListNode head, int k) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if (head == null ) return null; 
+        if ( head.next == null) return head;
+        ListNode r1 = head;
+        ListNode r2 = head;
+        int t = k;
+        
+        while (t > 1) {
+            r2 = r2.next;
+            t--;
+            if ( r2 == null ){
+                return head;
+            }
+        }
+        
+        ListNode sub = reverseKGroup(r2.next, k);
+        
+        
+        
+        
+        while( r1 != r2){
+            ListNode next = r1.next;
+            r1.next = sub;
+            sub = r1;
+            r1 = next;
+            
+        }
+        r1.next = sub;
+        return r1;
+      
+        
+        
+    }
