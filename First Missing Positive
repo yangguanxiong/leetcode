@@ -1,0 +1,46 @@
+public int firstMissingPositive(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        
+        if (A.length == 0 ) return 1;
+        if (A.length == 1 ){
+            return A[0]==1 ? 2: 1;
+        }        
+        for (int i = 0 ; i < A.length; i++){
+            if (A[i] == i + 1 || A[i] > A.length) {
+                continue;
+            }            
+            if (A[i] >= 1 && A[i] <= A.length){
+           
+                replaceNum(A, i);
+            }
+        }
+        for (int j = 0; j < A.length; j++){
+        
+            if (A[j] != j + 1){
+                return j + 1;
+            }
+        }
+        return A[A.length-1] + 1 ;        
+        
+    }
+    
+     public void replaceNum(int[] A, int i){
+      
+    	
+    	int tmp = A[A[i] - 1];
+        A[A[i] - 1] = A[i];
+        if (tmp >= 1 && tmp <= A.length && tmp != A[tmp - 1]){
+        
+            replaceTmp(A, tmp);    	        
+        }
+    }
+    
+    public void replaceTmp(int[] A, int tmp){
+    	int tmp2 = A[tmp - 1];
+    	A[tmp - 1] = tmp;
+    	
+    	 if (tmp2 >= 1 && tmp2 < A.length && tmp2 != A[tmp2 - 1]){	        	
+	            replaceTmp(A, tmp2);	        
+	        }  
+    }
