@@ -1,0 +1,30 @@
+public ListNode rotateRight(ListNode head, int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+         if (head == null ) return null;
+        
+        if ( head.next == null || n == 0) return head;
+        
+        ListNode r1 = head;
+        ListNode r2 = head;
+        int l = 0;
+        
+        while ( r2.next != null){
+            r2 = r2.next;
+            l++;
+        }
+        
+        r2.next = head;
+        n = n % (l+1);
+        
+        while ( l - n + 1 > 0 ){
+            r1 = r1.next;
+            r2 = r2.next;
+            l--;
+            
+        }
+        
+        r2.next = null;
+        return r1;
+        
+    }
