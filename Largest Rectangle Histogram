@@ -1,0 +1,78 @@
+ public int largestRectangleArea(int[] height) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if (height.length == 0 ) return 0;
+        if (height.length == 1 ) return height[0];
+       
+        
+        int resultMax = 0;
+       
+        int result = height[0];
+        int t = height[0];
+         
+        for (int i = 1; i < height.length; i++){
+           
+            if (height[i] >= t){
+                result += t;
+            } else {
+                break;
+            }
+        }
+        if ( result > resultMax){
+            resultMax = result;
+        }
+        
+        result = height[height.length - 1];
+        t = result;
+        for (int j = height.length -2; j >= 0 ; j--){
+            if (height[j] >= t){
+                result += t;
+            } else {
+                break;
+            }
+        }
+        
+         if ( result > resultMax){
+            resultMax = result;
+        }
+        
+        for (int m = 1; m <=height.length - 2; m++){
+            
+            t = height[m];
+            result = height[m];
+            int lm = m;
+            int rm = m;
+                
+            while(lm >= 1){
+                lm--; 
+                if (height[lm] >= t){
+                    result += t;
+                } else{
+                    break;
+                }
+            }
+            
+           
+            while(rm <= height.length - 2){
+                rm++;
+                if(height[rm] >= t){
+                    result += t;
+                } else {
+                    break;
+                }
+            }
+            
+            if ( result > resultMax){
+                resultMax = result;
+            }
+        
+        }
+        
+        
+        return resultMax;
+        
+        
+        
+        
+        
+    }
