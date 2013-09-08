@@ -1,0 +1,21 @@
+ public ListNode deleteDuplicates(ListNode head) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if ( head == null || head.next == null) return head;
+        
+        if (head.val == head.next.val){
+            while(head.val == head.next.val){
+                head = head.next;
+                if ( head.next == null){
+                    return null;
+                }
+            }
+            return deleteDuplicates(head.next);
+        } else {
+            head.next = deleteDuplicates(head.next);
+        }
+        return head;
+        
+        
+        
+    }
