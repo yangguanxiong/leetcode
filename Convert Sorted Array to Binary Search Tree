@@ -1,0 +1,14 @@
+public TreeNode sortedArrayToBST(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if (num.length == 0 ) return null;
+        
+        TreeNode root = new TreeNode(num[num.length/2]);
+        
+        if (num.length == 1) return root;
+        
+        root.left = sortedArrayToBST(Arrays.copyOfRange(num, 0, num.length/2));
+        root.right = sortedArrayToBST(Arrays.copyOfRange(num, num.length/2 + 1, num.length));
+        return root;
+        
+    }
