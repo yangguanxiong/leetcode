@@ -1,0 +1,23 @@
+ public boolean isBalanced(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if (root == null ) return true;
+        int l = getHeight(root.left);
+        int r = getHeight(root.right);
+        boolean flag = true;
+        if( Math.abs(l-r) > 1){
+            flag = false;
+        }
+        
+        return isBalanced(root.left) && isBalanced(root.right) && flag;
+        
+        
+        
+    }
+    public int getHeight(TreeNode n ){
+        if (n == null) return 0;
+        int l = getHeight(n.left);
+        int r = getHeight(n.right);
+        
+        return l > r ? (1+l): (1+ r);
+    }
