@@ -1,0 +1,25 @@
+public boolean isSymmetric(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if ( root == null ) return true;
+        ArrayList<Integer> nodes = InOrderTraversal(root);
+        
+        for (int i = 0 ; i < nodes.size()/2; i++){
+            if (nodes.get(i) != nodes.get(nodes.size()-1-i)) return false;
+        }
+        return true;
+    }
+    
+    public ArrayList<Integer> InOrderTraversal(TreeNode n){
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if ( n == null){
+            return result;
+        }
+        
+        result.addAll(InOrderTraversal(n.left));
+        result.add(n.val);
+        result.addAll(InOrderTraversal(n.right));
+        return result;
+        
+    }
+    
