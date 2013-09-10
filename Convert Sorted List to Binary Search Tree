@@ -1,0 +1,36 @@
+ public TreeNode sortedListToBST(ListNode head) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if ( head == null ) return null;
+        if ( head.next == null) return new TreeNode(head.val);
+        int l = 1;
+        ListNode r = head;
+        while( r.next != null){
+            r = r.next;
+            l++;
+        }
+        
+        int rootIndex = l /2;
+        
+        ListNode treeRoot = head;
+        
+        while ( rootIndex > 1 ){
+            treeRoot = treeRoot.next;
+            rootIndex--;
+        }
+        
+        TreeNode root = new TreeNode(treeRoot.next.val);
+        ListNode right = treeRoot.next.next;
+        treeRoot.next = null;
+        
+        root.left = sortedListToBST(head);
+        root.right = sortedListToBST(right);
+        return root;
+        
+        
+        
+        
+        
+        
+        
+    }
