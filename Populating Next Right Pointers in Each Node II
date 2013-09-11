@@ -1,0 +1,82 @@
+ public void connect(TreeLinkNode root) {
+       if (root == null ) return;
+       if (root.left == null){
+           connect(root.right);
+           return;
+       }
+       
+       if (root.right == null){
+           connect(root.left);
+           return;
+       }
+       
+       root.left.next = root.right;
+       
+       TreeLinkNode cur = root.left;
+       TreeLinkNode nextBeginning = cur;
+       
+       while(nextBeginning != null){
+           while (cur.left == null && cur.right == null){
+               cur = cur.next;
+               if (cur == null){
+                   return;
+               }
+           }  
+           
+           if (cur.left != null){
+                nextBeginning = cur.left;
+           } else {
+               nextBeginning = cur.right;
+           }
+           TreeLinkNode cur2 = nextBeginning;
+           
+           while(cur2 != null){
+               cur2.next = findNext(cur, cur2);
+               cur2 = cur2.next;
+           }
+           
+           cur = nextBeginning;
+           
+       }
+      
+    
+        
+    }
+    
+    public TreeLinkNode findNext(TreeLinkNode up, TreeLinkNode down){
+       while(!(up.left == down || up.right == down)){
+           up = up.next;
+       }
+       
+       if (up.left == down){
+           if(up.right != null){
+               return up.right;
+           } else {
+               up = up.next;
+               if (up == null) return null;
+               while(up.left == null && up.right == null){
+                   up = up.next;
+                   if (up == null) return null;
+               }
+               if (up.left != null){
+                   return up.left;
+               } else{
+                   return up.right;
+               }
+             
+           }
+       } else {
+            up = up.next;
+            if (up == null) return null;
+            while(up.left == null && up.right == null){
+                   up = up.next;
+                   if (up == null) return null;
+               }
+               if (up.left != null){
+                   return up.left;
+               } else{
+                   return up.right;
+               }
+           
+       }
+    }
