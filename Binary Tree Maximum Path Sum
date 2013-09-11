@@ -1,0 +1,42 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public static int curMax;
+    public int maxPathSum(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        curMax = Integer.MIN_VALUE;
+        
+        maxWithRoot(root);
+        return curMax;
+    }
+    
+    public int maxWithRoot(TreeNode root){
+        if (root == null) return Integer.MIN_VALUE;
+        
+        int leftMax = maxWithRoot(root.left);
+        int rightMax = maxWithRoot(root.right);
+        
+        //max happens in this subtree
+        int subTreeMax = root.val;
+        if (leftMax > 0 ) subTreeMax += leftMax;
+        if (rightMax > 0) subTreeMax += rightMax;
+        if (subTreeMax > curMax) curMax = subTreeMax;
+        
+        
+        //max onlu goes through one side of the subtree
+        int pathMax = root.val;
+        int largerSub = Math.max(leftMax, rightMax);        
+        if (largerSub > 0 ) pathMax += largerSub;        
+        if (pathMax > curMax) curMax = pathMax;        
+        return pathMax;     
+        
+    }
+}
