@@ -1,0 +1,29 @@
+ public void flatten(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if (root == null ) return ;
+        
+        if ( root.left == null && root.right == null) return;
+        
+        if (root.left != null){
+            TreeNode tmp = root.right;
+            root.right = root.left;
+            root.left = null;
+            TreeNode rightMost = findRightMost(root);
+            rightMost.right = tmp;
+            flatten(root.right);
+            
+        } else if (root.right != null){
+            flatten(root.right);
+        }
+        
+        
+    }
+    
+    public TreeNode findRightMost(TreeNode n){
+        if (n.right != null){
+            return findRightMost(n.right);
+        } else {
+            return n;
+        }
+    }
