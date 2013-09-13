@@ -1,0 +1,23 @@
+public String convert(String s, int nRows) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if (nRows <= 1) return s;
+        if (s.length() <= nRows ) return s;
+        
+        StringBuffer buf = new StringBuffer();
+        int index = 0;
+        int diff = 2 * nRows -2;
+        for (int i = 0; i < nRows; i++){
+            index = i;
+            while(index < s.length()){
+                buf.append(s.charAt(i));
+                
+                index += diff;
+                if(i != 0 && i != nRows - 1 && index-i-i < s.length()){
+                    buf.append(s.charAt(index-i-i));
+                }
+            }
+            
+        }
+        return buf.toString();
+    }
