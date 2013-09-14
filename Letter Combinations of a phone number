@@ -1,0 +1,81 @@
+public class Solution {
+    public ArrayList<String> letterCombinations(String digits) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<String> result = new ArrayList<String>();
+        if(digits.length() == 0){
+            String s = "";
+            result.add(s);
+            return result;
+        } 
+        if (digits.length() == 1){
+            
+            switch (digits.charAt(0)){
+                
+                case '2':
+                    result.add("a");
+                    result.add("b");
+                    result.add("c");
+                    return result;
+                case '3':
+                    result.add("d");
+                    result.add("e");
+                    result.add("f");
+                    return result;
+                case '4':
+                    result.add("g");
+                    result.add("h");
+                    result.add("i");
+                    return result;
+                case '5':
+                    result.add("j");
+                    result.add("k");
+                    result.add("l");
+                    return result;
+                case '6':
+                    result.add("m");
+                    result.add("n");
+                    result.add("o");
+                    return result;
+                case '7':
+                    result.add("p");
+                    result.add("q");
+                    result.add("r");
+                    result.add("s");
+                    return result;
+                case '8':
+                    result.add("t");
+                    result.add("u");
+                    result.add("v");
+                    return result;
+                case '9':
+                    result.add("w");
+                    result.add("x");
+                    result.add("y");
+                    result.add("z");
+                    return result;
+                    
+            }
+        }
+        
+        
+      
+        
+        ArrayList<String> sub = letterCombinations(digits.substring(1, digits.length()));
+        
+        
+        ArrayList<String> head = letterCombinations(digits.substring(0,1));
+        
+        for (int i = 0; i < head.size() ; i++){
+            for(int j = 0; j<sub.size();  j++ ){
+                result.add(head.get(i) + sub.get(j));
+            }
+        }
+        
+        return result;
+        
+        
+        
+        
+    }
+}
