@@ -1,0 +1,43 @@
+public class Solution {
+    public int threeSumClosest(int[] num, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int diff = Integer.MAX_VALUE;
+        
+        Arrays.sort(num);
+        int sum = 0;
+        int finalSum = 0;
+      
+        
+        for (int i = 0; i <= num.length - 3; i++){
+            int l = i + 1;
+            int r = num.length - 1;
+            while ( l< r){
+                sum = num[i] + num[l] + num[r];
+                int tmpDiff = Math.abs(sum - target);
+                if (sum == target) return sum;
+                if (sum < target){
+                    l++;
+                    if (tmpDiff < diff){
+                        diff = tmpDiff;
+                        finalSum = sum;
+                    }
+                    continue;
+                }
+                if ( sum > target){
+                    r--;
+                    if (tmpDiff < diff){
+                        diff = tmpDiff;
+                        finalSum = sum;
+                    }
+                    continue;
+                }
+                
+            }
+            
+            
+        }
+        return finalSum;
+        
+    }
+}
