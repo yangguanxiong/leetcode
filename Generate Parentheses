@@ -1,0 +1,44 @@
+public class Solution {
+    public ArrayList<String> generateParenthesis(int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<String> result = new ArrayList<String>();
+        if (n <=0 ){
+            String s = "";
+            result.add(s);
+            return result;
+        }
+        
+        if (n == 1){
+            String s = "()";
+            result.add(s);
+            return result;
+        }
+        
+        Set<String> resultSet = generateParenthesesHelper(n);
+        for (String astring: resultSet){
+            result.add(astring);
+        }
+        return result;
+            
+        
+    }
+    
+    public Set<String> generateParenthesesHelper(int n){
+        Set<String> r = new HashSet<String>();
+        if (n == 1){
+            r.add("()");
+            return r;
+        }
+        Set<String> sub = generateParenthesesHelper(n - 1);
+        
+        for (String insub: sub){
+            for (int i = -1; i < insub.length(); i++){
+                r.add(insub.substring(0, i+1) + "()" + insub.substring(i+1, insub.length()));
+            }
+        } 
+        
+        return r;
+        
+    }
+}
