@@ -1,0 +1,100 @@
+ public static ArrayList<Integer> findSubstring(String S, String[] L) {
+	        // Start typing your Java solution below
+	        // DO NOT write main() function
+	        ArrayList<Integer> result = new ArrayList<Integer>();
+	        
+	        int num = L.length;
+	        if (num == 0 ) return result;
+	        int wordLen = L[0].length();
+	        
+	        int subStringLen = wordLen * num;
+	        if (S.length() < subStringLen) return result;
+	        
+	        Queue<Integer> q = new LinkedList<Integer>();
+	        
+	        int i = 0;
+	        while(i != -1){
+	            i = S.indexOf(L[0], i);
+	            if (i != -1){
+	                //
+	                q.add(i);
+	                i++;
+	            }
+	        }
+	        //if(q.isEmpty()) return result;
+	        
+	        while(!q.isEmpty()){
+	            int key = q.poll();
+//	            System.out.println("key: " + key);
+	            int[] index = findIndex(S, L, key);
+	            
+	            if (index[0] != -1 && !result.contains(index[0])){
+//	            	System.out.println("id0: " + index[0]);
+	                result.add(index[0]);
+	            }
+	            
+	            if (index[1] != -1 && !result.contains(index[1])){
+//	            	System.out.println("id1: " + index[1]);
+
+	                result.add(index[1]);
+	            }
+	        }
+	        return result;
+	        
+	        
+	        
+	    }
+	    
+	    public static int[] findIndex(String S, String[] L, int key){
+	    	int subStringLen = L.length * L[0].length();
+	    	
+	        int result[] = new int[]{-1, -1};
+	        int l = key - L[0].length();
+	        int r = key + L[0].length();
+	        
+	        HashMap<String, Boolean> map = new HashMap<String, Boolean>();
+	        //map.put(L[0], true);
+	        for (int i = 1; i < L.length; i++){
+	            map.put(L[i], false);
+	        }
+	        
+	        while(l >=0){
+	            String sub = S.substring(l, l + L[0].length()); 
+	            if (map.containsKey(sub) && (map.get(sub) == false )){
+	                map.remove(sub);
+	                map.put(sub, true);
+	                if (!map.containsValue(false)){
+	                	result[0] = l;
+	                	break;
+	                }
+	                
+	                l -= L[0].length();
+	            } else {
+	                break;
+	            }
+	        }
+	        
+	        
+	        
+	        while(r + L[0].length() <= S.length()){
+	            String sub = S.substring(r, r + L[0].length());
+	            
+	            if(map.containsKey(sub) && (map.get(sub) == false)){
+	                map.remove(sub);
+	                map.put(sub, true);
+	                if (!map.containsValue(false) && (subStringLen == r - key + L[0].length())){
+	                	result[1] =  key;
+	                }
+	                r += L[0].length();
+	            } else {
+	                break;
+	            }
+	        }
+	        
+	        if (!map.containsValue(false)&& (subStringLen == r - l + L[0].length()) ){
+	            result[1] =  l + L[0].length();
+	        }
+	        
+	        return result;
+	        
+	    }
