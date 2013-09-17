@@ -1,55 +1,43 @@
- public int atoi(String str) {
+public class Solution {
+    public int atoi(String str) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        
-         if (str.length() == 0 )  return 0;
+        if (str.length() == 0 ) return 0;
         boolean flag = true;
-        int i = 0;  //index of the string
-        int result = 0;
-        int count = 0;  //count the digits of the integer
+        int i = 0;
         while(str.charAt(i) == ' '){
             i++;
-            if (i == str.length()){
-                return 0;
-            }
+            if (i == str.length()) return 0;
         }
         
-        if (str.charAt(i) == '-' ){
+        if (str.charAt(i) == '-'){
             flag = false;
             i++;
         } else if (str.charAt(i) == '+'){
-            flag = true;
             i++;
-        } else if (str.charAt(i) < '0' && str.charAt(i) > '9'){
-            return 0;
         }
-        
-        while( i < str.length()){
-            if (str.charAt(i) < '0' || str.charAt(i) > '9'){
-                break;
-                //return 0;
-            } 
-    		 if (flag == true){
-			     if (count == 10 || (count == 9 && str.charAt(i) >= '7' && result == 214748364)){
-			    	 return Integer.MAX_VALUE;
-			     } else {
-			    	 result = result * 10 + (str.charAt(i) - '0');
-			     }
-			   }
-			   if (flag == false ){
-			       if (count == 10 || (count == 9 && str.charAt(i) >= '8' && result == 214748364)){
-			    	return Integer.MIN_VALUE;
-			   } else {
-			      result = result * 10 + (str.charAt(i) - '0');
-			     }
-			       
-			   }
+        if (i == str.length()) return 0;
+        int result = 0;
+        int count = 0;
+        while(str.charAt(i) >= '0' && str.charAt(i) <= '9'){
+            if (flag == true){
+                if (count == 10 || result == 214748364 && (str.charAt(i) == '8' || str.charAt(i)=='9')) return Integer.MAX_VALUE;
+                result = result * 10 + Character.getNumericValue(str.charAt(i));
+            } else {
+                if (count == 10 || result == 214748364 && (str.charAt(i) == '8' || str.charAt(i)=='9'))  return Integer.MIN_VALUE;
+                result = result * 10 + Character.getNumericValue(str.charAt(i));
+            }
+            i++;
             count++;
-            i++;
-        }
-        if (flag == true){
-            return result;
-        } else {
-            return -1 * result;
+            if (i == str.length()){
+                return flag ? result : result * (-1);
+            }
+            
         }
         
+        return flag ? result : result * (-1);
+        
+        
+        
+    }
+}
