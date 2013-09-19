@@ -1,28 +1,23 @@
- public int searchInsert(int[] A, int target) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        if (A.length == 0 ) return 0;
-        if (A[0] >= target) return 0;
-        if (A[A.length-1] < target) return A.length;
-        
-        if (A.length == 1){
-            if (A[0] >= target) return 0;
-            return 1;
+class Solution {
+public:
+    int searchInsert(int A[], int n, int target) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if ( n == 0) return 0;
+        int i = 0; 
+        int j = n - 1;
+        while (i <= j){
+            int mid = (i + j)/2;
+            if (A[mid] == target){
+                return mid;
+            }
+            if (A[mid] < target){
+                i = mid + 1;
+            } else {
+                j = mid - 1;
+            }
         }
         
-        int mid = A.length/2;
-        
-        if (A[mid] == target){
-            return mid;
-        }
-        
-        if (A[mid] > target){
-            int[] Asub = Arrays.copyOfRange(A, 0, mid);
-            return searchInsert(Asub, target);
-            
-        } else {
-            int[] Asub = Arrays.copyOfRange(A, mid, A.length);
-            return mid + searchInsert(Asub, target);
-        }
-        
+        return i;
     }
+};
