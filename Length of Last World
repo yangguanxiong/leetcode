@@ -1,22 +1,23 @@
- public int lengthOfLastWord(String s) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
+
+class Solution {
+public:
+    int lengthOfLastWord(const char *s) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int len = strlen(s);
         
-        if ( s.length() == 0) return 0;
         int count = 0;
         
-        for (int i = s.length() - 1; i >=0; i--){
-            if (s.charAt(i) == ' '){
-                continue;
-            }
-            
-            
-            while( i>=0 && s.charAt(i) != ' ' ){
+        for (int i = len - 1; i >= 0 ; --i){
+            if (s[i] != ' '){
                 count++;
-                i--;
+            } else if (count > 0){
+                break;
             }
-            return count;
+            
+            
         }
-        return 0;
+        return count;
         
     }
+};
