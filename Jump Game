@@ -1,0 +1,15 @@
+public class Solution {
+    public boolean canJump(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int start = 0;
+        int end = 0;
+        while(start <= end && end < A.length - 1){
+            end = Math.max(end, start + A[start]);
+            start++;
+            
+        }
+        return end >= A.length -1;
+        
+    }
+}
