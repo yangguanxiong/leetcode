@@ -9,7 +9,7 @@ public class Solution {
         
         int l = a.length() > b.length() ? a.length() : b.length();
         
-        String r = new String();
+        StringBuffer r = new StringBuffer();
         
         for (int i = 0; i < l ; i++){
             int abit = 0; int bbit = 0;
@@ -20,12 +20,14 @@ public class Solution {
                 bbit = Character.getNumericValue(b.charAt(b.length()-1-i));
             }
             
-            r = (abit + bbit + carry)%2 + r;
+            //r = (abit + bbit + carry)%2 + r;
+            r.insert(0,(abit + bbit + carry)%2 );
+            
             carry = (abit + bbit + carry)/2;
         }
         if (carry == 1){
-            r = 1 + r;
+            r.insert(0,1);
         }
-        return r;
+        return r.toString();
     }
 }
