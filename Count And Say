@@ -1,41 +1,34 @@
-public String countAndSay(int n) {
+public class Solution {
+    public String countAndSay(int n) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if ( n <=0 ) return "";
-        if ( n == 1) return "1";
-        
-        return readString(countAndSay(n - 1)); 
+        if (n <= 0 ) return null;
+        String s = "1";
+        if (n == 1) return s;
+        for (int i = 2; i <= n; i++){
+            s = countAndSayString(s);
+        }
+        return s;
         
     }
     
-    public String readString(String s){
-        
-       int l = s.length();
-            if (l == 1) return "11";
-	        String r = "";
-	        
-	        int count = 0;
-	        
-	        for (int i = 0; i < s.length() ; i+=count){
-	            char c = s.charAt(i);
-	             count = 1;
-	             
-	            if  (i + count < l){
-	            	while(s.charAt(i+count) == c){
-		                count++;
-		                if (i + count == l){
-		                    break;
-		                    
-		                }
-		            }
-	            }
-	            
-	            r += Integer.toString(count);
-	            r += c;
-	          
-	            
-	        }
-	        
-	        return r;
-        
+    public String countAndSayString(String s){
+       StringBuffer r = new StringBuffer();
+       int count = 1;
+       char k = s.charAt(0);
+       
+       for (int i = 1; i < s.length(); i++){
+           if (s.charAt(i) == k){
+               count++;
+           } else {
+               r.append(count);
+               r.append(k);
+               k = s.charAt(i);
+               count = 1;
+           }
+       }
+       r.append(count);
+       r.append(k);
+       return r.toString();    
     }
+}
