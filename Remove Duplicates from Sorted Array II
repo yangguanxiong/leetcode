@@ -1,27 +1,24 @@
 public class Solution {
     public int removeDuplicates(int[] A) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        if (A.length <= 2) return A.length;
-        int i = 0;
-        int j = 1;
-        int key = A[0];
-        boolean twiceFlag = false;
-        
-        while(j < A.length){
-            if (A[j] != key){
-                A[++i] = A[j];
-                key = A[j++]; 
-                twiceFlag = false;
-            } else {
-                if (twiceFlag){
-                  j++;
-                } else {
-                  twiceFlag = true;
-                  A[++i] = A[j++];
-                }
-            }
-        }
-        return i+1;
+       if(A.length <= 2) return A.length;
+       int i = 0;
+       int j = 1;
+       int key = A[i];
+       boolean twiceFlag = false;
+       while(j < A.length){
+           if (A[j] == key){
+               if (twiceFlag){
+                   j++;
+               } else {
+                   A[++i] = A[j++];
+                   twiceFlag = true;
+               }
+           } else {
+               key = A[j];
+               A[++i] = A[j++];
+               twiceFlag = false;
+           }
+       }
+       return i+1;
     }
 }
