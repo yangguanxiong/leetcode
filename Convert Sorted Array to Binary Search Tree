@@ -1,14 +1,28 @@
-public TreeNode sortedArrayToBST(int[] num) {
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode sortedArrayToBST(int[] num) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if (num.length == 0 ) return null;
+        if(num.length ==  0) return null;
+        return convert(num, 0, num.length - 1);
+    }
+    public TreeNode convert(int[] num, int l, int r){
+        if (l > r) return null;
+        if (l == r) return new TreeNode(num[l]);
         
-        TreeNode root = new TreeNode(num[num.length/2]);
-        
-        if (num.length == 1) return root;
-        
-        root.left = sortedArrayToBST(Arrays.copyOfRange(num, 0, num.length/2));
-        root.right = sortedArrayToBST(Arrays.copyOfRange(num, num.length/2 + 1, num.length));
+        int mid = (l + r)/2;
+        TreeNode root = new TreeNode(num[mid]);
+        root.left = convert(num, l, mid - 1);
+        root.right = convert(num, mid + 1, r);
         return root;
         
     }
+}
