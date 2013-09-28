@@ -1,21 +1,29 @@
- public ListNode deleteDuplicates(ListNode head) {
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
         // Start typing your Java solution below
         // DO NOT write main() function
-        if ( head == null || head.next == null) return head;
-        
-        if (head.val == head.next.val){
-            while(head.val == head.next.val){
-                head = head.next;
-                if ( head.next == null){
-                    return null;
-                }
-            }
-            return deleteDuplicates(head.next);
-        } else {
-            head.next = deleteDuplicates(head.next);
+        if (head == null || head.next == null) return head;
+        ListNode i = head;
+        ListNode j = i.next;
+        while (j.val == i.val){
+            j = j.next;
+            if (j == null) return null;
         }
+        if (i.next != j){
+            return deleteDuplicates(j);
+        }
+        head.next = deleteDuplicates(j);
         return head;
-        
-        
-        
     }
+}
