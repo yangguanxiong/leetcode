@@ -1,3 +1,8 @@
+
+//find permutations: DFS, similar with Path Sum II
+//sort the Array, use lastIdx to check if the element is duplicated
+
+
 public class Solution {
     public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
         // Start typing your Java solution below
