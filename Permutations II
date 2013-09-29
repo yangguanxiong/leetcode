@@ -1,0 +1,35 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if (num.length == 0) return result;
+        Arrays.sort(num);
+        ArrayList<Integer> sub = new ArrayList<Integer>();
+        boolean[] avail = new boolean[num.length];
+        
+        findPermuteUnique(num,avail, result, sub);
+        return result;
+    }
+    
+    public void findPermuteUnique(int[] num, boolean[] avail, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> sub){
+        if (sub.size() == num.length){
+            ArrayList<Integer> subCopy = new ArrayList<Integer>(sub);
+            result.add(subCopy);
+            return;
+        }
+        int lastIdx = -1;
+        for (int i = 0; i < num.length; i++){
+            if (lastIdx != -1 && num[i] == num[lastIdx]) continue;
+            if (!avail[i]){
+                
+                avail[i] = true;
+                sub.add(num[i]);
+                findPermuteUnique(num, avail, result, sub);
+                sub.remove(sub.size() - 1);
+                avail[i] = false;
+                lastIdx = i;
+            }
+        }
+    }
+}
