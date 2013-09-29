@@ -1,0 +1,22 @@
+public class Solution {
+    public ArrayList<Integer> getRow(int rowIndex) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        
+        ArrayList<Integer> r = new ArrayList<Integer>();
+        r.add(1);
+        if (rowIndex == 0) return r;
+        
+        int len = rowIndex + 1;
+        for (int i = 1; i < len; i++){
+            r.add(0);
+        }
+        while(rowIndex > 0){
+            for (int j = len - 1; j >= 1; j--){
+                r.set(j, r.get(j) + r.get(j - 1));
+            }
+            rowIndex--;
+        }
+        return r;
+    }
+}
