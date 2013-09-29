@@ -1,8 +1,6 @@
 public class Solution {
     public ArrayList<ArrayList<Integer>> generate(int numRows) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>(numRows);
         ArrayList<Integer> row = new ArrayList<Integer>();
         for (int i = 0; i < numRows; i++){
             row.add(1);
@@ -10,6 +8,13 @@ public class Solution {
                 row.add(result.get(i-1).get(j-1) + result.get(i-1).get(j));
             }
             if (i >= 1) row.add(1);
+            
+            // Here are 2 ways to add row into result:
+            // 1: 
+            // result.add(new ArrayList<Integer>(row));
+            // row.clear();
+            
+            // 2:
             result.add(row);
             row = new ArrayList<Integer>();
         }
