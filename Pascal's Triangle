@@ -1,33 +1,18 @@
-public static ArrayList<ArrayList<Integer>> generate(int numRows) {
-	        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-	        if ( numRows <= 0 ) return result;
-	        ArrayList<Integer> lastRow = new ArrayList<Integer>();
-	        lastRow.add(1);
-	        result.add(lastRow);
-	        if (numRows == 1) {
-	        	
-	        	return result;
-	        }
-	        for (int i = 2 ; i <= numRows; i++ ){
-	        	ArrayList<Integer> curRow = new ArrayList<Integer>();
-	            curRow.add(1);
-	            
-	            
-	            curRow.add(1);
-	            if (curRow.size() < i){
-	            	for (int j = 2; j< i ; j++){
-	            	
-		                curRow.add(j -1, lastRow.get(j - 2) + lastRow.get(j - 1));
-		            }
-	            }
-          
-	            result.add(curRow);
-	            lastRow = curRow;
-	            
-	            
-	        }
-	        
-	        return result;
-	    }
-	    
-	    
+public class Solution {
+    public ArrayList<ArrayList<Integer>> generate(int numRows) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> row = new ArrayList<Integer>();
+        for (int i = 0; i < numRows; i++){
+            row.add(1);
+            for (int j = 1; j < i; j++){
+                row.add(result.get(i-1).get(j-1) + result.get(i-1).get(j));
+            }
+            if (i >= 1) row.add(1);
+            result.add(row);
+            row = new ArrayList<Integer>();
+        }
+        return result;
+    }
+}
