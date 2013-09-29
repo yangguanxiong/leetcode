@@ -31,39 +31,25 @@ public class Solution {
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-public static int lengthOfLongestSubstring(String s) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        
-        if (s.length() == 0 ){
-            return 0;
-        }
-        if (s.length() == 1){
-        	return 1;
-        }
-       // int[] result = new int[]{0,0};
-        int result = 1;
-     //   char[] schar = s.toCharArray();
-        Hashtable<Character, Integer> table = new Hashtable<Character, Integer>();
-        
-        for (int i = 0; i<s.length(); i++){
-            if (table.containsKey(s.charAt(i))){
-                // repeated char found
-                result = i;
-                
-                int resultSub = lengthOfLongestSubstring(s.substring(1, s.length()));
-//                System.out.println(s.substring(i, s.length()));
-//                System.out.println("resultSub: " + resultSub);
-                if (resultSub > result){
-                    return resultSub;
-                } else {
-                	return result;
-                }
-            } else {
-                table.put(s.charAt(i), 1);
-            }
-            
-        }
-        return s.length();//edit
-        
+// Solution1: recursion
+
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+       if (s.length() <= 1) return s.length();
+	       int len = 1;
+	       
+	       int j = 1;
+	       HashMap<Character, Boolean> map = new HashMap<Character, Boolean>();
+	       map.put(s.charAt(0), true);
+	       while(j < s.length()){
+	           if (!map.containsKey(s.charAt(j))){
+	               map.put(s.charAt(j), true);
+	               len++;
+	           } else {
+	               int sub = lengthOfLongestSubstring(s.substring(1, s.length()));
+	               return len > sub ? len: sub;
+	           }
+	       }
+	       return len;
     }
+}
