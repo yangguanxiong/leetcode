@@ -35,21 +35,20 @@ public class Solution {
 
 public class Solution {
     public int lengthOfLongestSubstring(String s) {
-       if (s.length() <= 1) return s.length();
-	       int len = 1;
-	       
-	       int j = 1;
-	       HashMap<Character, Boolean> map = new HashMap<Character, Boolean>();
-	       map.put(s.charAt(0), true);
-	       while(j < s.length()){
-	           if (!map.containsKey(s.charAt(j))){
-	               map.put(s.charAt(j), true);
-	               len++;
-	           } else {
-	               int sub = lengthOfLongestSubstring(s.substring(1, s.length()));
-	               return len > sub ? len: sub;
-	           }
-	       }
-	       return len;
+       if (s.length() <= 1 ) return s.length();
+      
+       int j = 1;
+       HashMap<Character, Boolean> map = new HashMap<Character, Boolean>();
+       map.put(s.charAt(0), true);
+       while(j < s.length()){
+           if (!map.containsKey(s.charAt(j))){
+               map.put(s.charAt(j), true);
+               j++;
+           } else {
+               int sublen = lengthOfLongestSubstring(s.substring(1, s.length()));
+               return j > sublen ? j : sublen;
+           }
+       }
+       return j;
     }
 }
