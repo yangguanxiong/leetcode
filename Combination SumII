@@ -11,12 +11,11 @@ public class Solution {
     public void combinationSumII(int[] num, int target, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> sub, int idx){
          if (target == 0){
             ArrayList<Integer> clone = new ArrayList<Integer>(sub);
-            if (!result.contains(clone)){
-               result.add(clone);  
-            }
+            result.add(clone);  
          }
          
          for (int i = idx; i < num.length && target >= num[i]; i++){
+            if (i > idx && num[i] == num[i-1]) continue; 
             sub.add(num[i]);
             combinationSumII(num, target - num[i], result, sub, i + 1);
             sub.remove(sub.size() - 1);
