@@ -4,29 +4,22 @@ public class Solution {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> sub = new ArrayList<Integer>();
         Arrays.sort(num);
-        if (num.length == 0 || target < num[0]) return result;
         combinationSumII(num, target, result, sub, 0);
         return result;
     }
    
     public void combinationSumII(int[] num, int target, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> sub, int idx){
-         for (int i = idx; i < num.length; i++){
-            
-            if (target == num[i]){
-                ArrayList<Integer> clone = new ArrayList<Integer>(sub);
-                clone.add(num[i]);
-                if (!result.contains(clone)){
-                  result.add(clone); 
-                }
-            } else if (target < num[i]){
-                return;
-            } else {
-                target -= num[i];
-                sub.add(num[i]);
-                combinationSumII(num, target, result, sub, i + 1);
-                target += num[i];
-                sub.remove(sub.size() - 1);
+         if (target == 0){
+            ArrayList<Integer> clone = new ArrayList<Integer>(sub);
+            if (!result.contains(clone)){
+               result.add(clone);  
             }
+         }
+         
+         for (int i = idx; i < num.length && target >= num[i]; i++){
+            sub.add(num[i]);
+            combinationSumII(num, target - num[i], result, sub, i + 1);
+            sub.remove(sub.size() - 1);
         }
     }
 }
