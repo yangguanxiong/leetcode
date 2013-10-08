@@ -1,0 +1,26 @@
+public class Solution {
+    public String multiply(String num1, String num2) {
+        StringBuilder s = new StringBuilder();
+        if (num1.length() == 0 || num2.length() == 0) return s.toString();
+        s.setLength(num1.length() + num2.length());
+        
+        for (int i = num1.length() - 1; i >=0; i--){
+           int carry = 0;    
+           for (int j = num2.length() - 1; j >=0; j--){
+               int b = 0;
+               if (s.charAt(i + j + 1) != '\u0000'){
+                   b = Character.getNumericValue(s.charAt(i + j + 1));
+               }
+               int sum = b + carry + (num2.charAt(j) - '0') * (num1.charAt(i) - '0');
+               s.setCharAt(i+j+1, (char)(sum%10 + '0'));
+               carry = sum / 10;
+           }
+           s.setCharAt(i, (char)(carry + '0'));
+        }
+        
+        while (s.length() > 1 && (s.charAt(0) == '\u0000' || s.charAt(0)== '0')){
+            s.deleteCharAt(0);
+        }
+        return s.toString();
+    }
+}
