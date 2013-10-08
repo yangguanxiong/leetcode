@@ -1,0 +1,22 @@
+public class Solution {
+    public int jump(int[] A) {
+        if (A.length == 1) return 0;
+        int start = 0;
+        int step = 0;
+        while (start < A.length - 1){
+            step++;
+            if (start + A[start] >= A.length - 1){
+                return step;
+            }
+            int mid  = start + 1;
+            for (int i = start + 1; i <= start + A[start] ; i++){
+                if (i + A[i] >= mid + A[mid]){
+                    mid = i;
+                }
+            }
+            if (mid + A[mid] == start + A[start]) return -1;
+            start = mid;
+        }
+        return -1;
+    }
+}
