@@ -1,0 +1,37 @@
+public class Solution {
+    public ArrayList<String[]> solveNQueens(int n) {
+        
+        ArrayList<String[]> result = new ArrayList<String[]>();
+    	String[] r = new String[n];	      
+        solveNQueens(n, 0 , 0 , 0, result, r, 0);       
+        return result;
+    }
+     public static void solveNQueens(int n, int row, int slash, int backslash, ArrayList<String[]> result,String[] r, int r_idx){
+        if ((1<<n) - 1 == row){
+        	String[] clone = new String[n];
+        	for (int k = 0; k < n ; k++){
+        		clone[k] = r[k];
+        	}
+            result.add(clone);	            
+            return;
+        }   	        
+        int avail = ~(row | slash | backslash);
+        for (int i = 0; i < n; i++){
+            int pos = (1 << i);
+            if ((avail & pos) != 0){
+                //update String Builder
+            	StringBuilder s = new StringBuilder(n);
+            	for (int m = 0; m < n; m++){
+            		if (m == i){
+            			s.append('Q');
+            		} else {
+            			s.append('.');
+            		}	            		
+            	}
+                r[r_idx] = s.toString();
+                solveNQueens(n, row | pos, (slash | pos)<<1, (backslash|pos)>>>1, result, r, r_idx+1);
+                r[r_idx] = new String();
+            }
+        }
+    }
+}
