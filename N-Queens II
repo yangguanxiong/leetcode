@@ -1,0 +1,27 @@
+//The idea is from http://www.matrix67.com/blog/archives/266 (in chinese).
+//Learn this from https://github.com/AnnieKim/LeetCode/blob/master/N-QueensII.h
+//Check available position of each row, check left diagnose and right diagnose, apply bit manipulation
+
+public class Solution {
+    public static class Result{
+        public static int result;
+    } 
+    public int totalNQueens(int n) {
+        Result.result = 0;
+        totalNQueens(n, 0, 0, 0);
+        return Result.result;
+    }
+    public void totalNQueens(int n, int row, int slash, int backslash){
+        if (row == (1<< n) - 1){
+            Result.result++;
+            return;
+        }
+        int avail = ~(row | slash | backslash);
+        for (int i = 0; i <= n-1; i++){
+            int pos = 1 << i;
+            if ((pos & avail)!= 0){
+                totalNQueens(n, row | pos, (slash | pos) << 1, (backslash | pos) >>> 1);
+            }
+        }
+    }
+}
