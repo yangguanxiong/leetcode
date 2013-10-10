@@ -1,0 +1,31 @@
+public class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        int imin = 0, imax = n - 1;
+        int jmin = 0, jmax = n - 1;
+        int idx = 1;
+        while(true){
+            for (int j = jmin; j <= jmax; j++){
+                matrix[imin][j] = idx++;
+            }
+            if (++imin > imax) break;
+            
+            for (int i = imin; i <= imax; i++){
+                matrix[i][jmax] = idx++;
+            }
+            if (--jmax < jmin) break;
+            
+            for (int j = jmax; j >= jmin; j--){
+                matrix[imax][j] = idx++;
+            }
+            if(--imax < imin) break;
+            
+            for(int i = imax; i >= imin; i--){
+                matrix[i][jmin] = idx++;
+            }
+            if(++jmin > jmax) break;
+        }
+        
+        return matrix;
+    }
+}
