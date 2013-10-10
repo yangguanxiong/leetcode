@@ -1,0 +1,24 @@
+public class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix.length == 0 || matrix[0].length == 0) return false;
+        int m = matrix.length - 1;
+        int n = matrix[0].length - 1;
+        return searchMatrix(matrix, target, 0, m, 0, n);
+    }
+    public boolean searchMatrix(int[][] matrix, int target, int m_min, int m_max, int n_min, int n_max){
+        if (m_min > m_max || n_min > n_max) return false;
+        if (m_min == m_max){
+            int n_mid = (n_min + n_max) /2;
+            if (target == matrix[m_min][n_mid]) return true;
+            if (target < matrix[m_min][n_mid]) return searchMatrix(matrix, target, m_min, m_max, n_min, n_mid - 1);
+            return searchMatrix(matrix, target, m_min, m_max, n_mid + 1, n_max);
+        }
+        int m_mid = (m_min + m_max) / 2;
+        if (target == matrix[m_mid][0]) return true;
+        if (target < matrix[m_mid][0]) return searchMatrix(matrix, target, m_min, m_mid - 1, n_min, n_max);
+        else {
+            if (target < matrix[m_mid + 1][0]) return searchMatrix(matrix, target, m_mid, m_mid, n_min, n_max);
+            return searchMatrix(matrix, target, m_mid + 1, m_max, n_min, n_max);
+        }
+    }
+}
