@@ -1,0 +1,52 @@
+//Using first row and column as auxiliary spaces instead of allocating new spaces
+
+public class Solution {
+    public void setZeroes(int[][] matrix) {
+        
+        if (matrix.length == 0 || matrix[0].length == 0) return;
+        boolean rowFlag = true;
+        boolean colFlag = true;
+        for (int i = 0; i < matrix.length; i++){
+            if (matrix[i][0] == 0){
+                colFlag = false;
+                break;
+            }
+        }
+        for (int j = 0; j < matrix[0].length; j++){
+            if(matrix[0][j] == 0){
+                rowFlag = false;
+                break;
+            }
+        }
+        
+        for (int i = 1; i < matrix.length; i++){
+            for (int j = 1; j < matrix[0].length; j++){
+                if (matrix[i][j] == 0){
+                    matrix[0][j] = 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+        
+        for (int i = 1; i < matrix.length; i++){
+            for (int j = 1; j < matrix[0].length; j++){
+                if (matrix[i][0] == 0 || matrix[0][j] == 0){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        if (rowFlag && colFlag) return;
+        if (!rowFlag){
+            for (int m = 0; m < matrix[0].length; m++){
+                matrix[0][m] = 0;
+            }
+        }
+        if (!colFlag){
+            for (int n = 0; n < matrix.length; n++){
+                matrix[n][0] = 0;
+            }
+        }
+        return;
+    }
+}
