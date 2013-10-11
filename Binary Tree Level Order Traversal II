@@ -1,51 +1,45 @@
-public ArrayList<ArrayList<Integer>> levelOrderBottom(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ArrayList<ArrayList<Integer>> levelOrderBottom(TreeNode root) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        
         if (root == null) return result;
-        
-        Queue<TreeNode> q = new LinkedList<TreeNode>();
-        
-        q.add(root);
-        int cur = 1;
-        int next = 0;
         ArrayList<Integer> level = new ArrayList<Integer>();
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        q.add(root);
+        int curNum = 1;
+        int nextNum = 0;
         
-        while (!q.isEmpty()){
+        while(!q.isEmpty()){
             TreeNode n = q.poll();
-            cur--;
             level.add(n.val);
-            
+            curNum--;
             if (n.left != null){
                 q.add(n.left);
-                next++;
+                nextNum++;
             }
             if (n.right != null){
                 q.add(n.right);
-                next++;
+                nextNum++;
             }
-            
-            if (cur == 0 ){
+            if (curNum == 0){
                 result.add(level);
-                cur = next;
-                next = 0;
                 level = new ArrayList<Integer>();
-                
+                curNum = nextNum;
+                nextNum = 0;
             }
-            
         }
-        int l = 0;
-        int r = result.size() - 1;
-        
-        while ( l < r ){
-             ArrayList<Integer> tmp = result.get(l);
-             result.set(l, result.get(r));
-             result.set(r, tmp);
-             l++;
-             r--;
+        ArrayList<ArrayList<Integer>> r = new ArrayList<ArrayList<Integer>>();
+        for (int i = result.size() - 1; i >= 0; i-- ){
+            r.add(result.get(i));
         }
-        return result;
-        
-        
+        return r;
     }
+}
