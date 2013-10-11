@@ -1,22 +1,29 @@
-public void connect(TreeLinkNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        if ( root == null ) return ;
-        if ( root.left == null ) return;
-        
-      
-        TreeLinkNode cur = root;
-        TreeLinkNode levelBeginning = cur.left;
-        
-        while ( levelBeginning != null ){
-            cur.left.next = cur.right;
-            while (cur.next != null){
-                cur.right.next = cur.next.left;
-                cur = cur.next;
-                cur.left.next = cur.right;
+/**
+ * Definition for binary tree with next pointer.
+ * public class TreeLinkNode {
+ *     int val;
+ *     TreeLinkNode left, right, next;
+ *     TreeLinkNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if (root == null || root.left == null) return;
+        root.left.next = root.right;
+        root.right.next = null;
+        TreeLinkNode cur = root.left;
+        while(cur.left != null){
+            TreeLinkNode n = cur;
+            while(n != null){
+                n.left.next = n.right;
+                if (n.next != null){
+                    n.right.next = n.next.left;
+                } else {
+                    n.right.next = null;
+                }
+                n = n.next;
             }
-            
-            cur = levelBeginning;
-            levelBeginning = levelBeginning.left;
+            cur = cur.left;
         }
     }
+}
