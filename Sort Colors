@@ -1,5 +1,30 @@
+// Solution2: swap with the beginning or the end of the array
+// Learned from: https://github.com/AnnieKim/Leetcode#leetcode
 
-
+public class Solution2 {
+    public void sortColors(int[] A) {
+        int i = 0;
+        int j = A.length - 1;
+        int zero = -1;
+        while (i <= j){
+            switch(A[i]){
+                case 0:
+                    int tmp = A[++zero];
+                    A[zero] = A[i];
+                    A[i++] = tmp;
+                    break;
+                case 1:
+                    i++;
+                    break;
+                case 2:
+                    int tmp2 = A[j];
+                    A[j--] = A[i];
+                    A[i] = tmp2;
+                    break;
+            }
+        }
+    }
+}
 
 
 //Solution1: using runners
