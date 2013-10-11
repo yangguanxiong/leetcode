@@ -1,29 +1,33 @@
- public void flatten(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        if (root == null ) return ;
-        
-        if ( root.left == null && root.right == null) return;
-        
-        if (root.left != null){
-            TreeNode tmp = root.right;
-            root.right = root.left;
-            root.left = null;
-            TreeNode rightMost = findRightMost(root);
-            rightMost.right = tmp;
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void flatten(TreeNode root) {
+        if (root == null) return ;
+        if (root.left == null) {
             flatten(root.right);
-            
-        } else if (root.right != null){
-            flatten(root.right);
+            return ;
         }
-        
-        
-    }
-    
-    public TreeNode findRightMost(TreeNode n){
-        if (n.right != null){
-            return findRightMost(n.right);
-        } else {
-            return n;
+        TreeNode tmp = root.right;
+        root.right = root.left;
+        root.left = null; //do not forget
+        TreeNode r = root;//find rightmost
+        while(r.right != null){
+            r = r.right;
+        }
+        r.right = tmp;
+        TreeNode p = root.right;
+        while (p != null){
+            if (p.left != null){
+                flatten(p);
+            }
+            p = p.right;
         }
     }
+}
