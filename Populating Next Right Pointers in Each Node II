@@ -1,82 +1,56 @@
- public void connect(TreeLinkNode root) {
-       if (root == null ) return;
-       if (root.left == null){
-           connect(root.right);
-           return;
-       }
-       
-       if (root.right == null){
-           connect(root.left);
-           return;
-       }
-       
-       root.left.next = root.right;
-       
-       TreeLinkNode cur = root.left;
-       TreeLinkNode nextBeginning = cur;
-       
-       while(nextBeginning != null){
-           while (cur.left == null && cur.right == null){
-               cur = cur.next;
-               if (cur == null){
-                   return;
-               }
-           }  
-           
-           if (cur.left != null){
-                nextBeginning = cur.left;
-           } else {
-               nextBeginning = cur.right;
-           }
-           TreeLinkNode cur2 = nextBeginning;
-           
-           while(cur2 != null){
-               cur2.next = findNext(cur, cur2);
-               cur2 = cur2.next;
-           }
-           
-           cur = nextBeginning;
-           
-       }
-      
+/**
+ * Definition for binary tree with next pointer.
+ * public class TreeLinkNode {
+ *     int val;
+ *     TreeLinkNode left, right, next;
+ *     TreeLinkNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        if (root == null) return;
+        if (root.left != null ) {
+            root.left.next = root.right;
+        } else {
+            connect(root.right);
+            return;
+        }
+        TreeLinkNode cur = root.left;
+        TreeLinkNode nextBeginning = null;
+        while(true){
+           while(cur.left != null || cur.right != null || cur.next != null){
+             if (cur.left != null){
+                 if (nextBeginning == null) nextBeginning = cur.left;
+                 if (cur.right != null){
+                     cur.left.next = cur.right;
+                 } else {
+                     cur.left.next = findNext(cur);
+                 }
+             }
+             if (cur.right != null){
+                 if (nextBeginning == null) nextBeginning = cur.right;
+                 cur.right.next = findNext(cur);
+             }
+             cur = cur.next;
+             if (cur == null) break;
+          } 
+          if (nextBeginning == null) break;
+          else {
+              cur = nextBeginning;
+              nextBeginning = null;
+          }
+        }
+    }
     
+    public TreeLinkNode findNext(TreeLinkNode cur){
+        if (cur.next == null) return null;
+        TreeLinkNode next = cur.next;
+        while(next.left == null && next.right == null){
+            next = next.next;
+            if (next == null) return null;
+        }
+        if (next.left != null) return next.left;
+        else return next.right;
         
     }
-    
-    public TreeLinkNode findNext(TreeLinkNode up, TreeLinkNode down){
-       while(!(up.left == down || up.right == down)){
-           up = up.next;
-       }
-       
-       if (up.left == down){
-           if(up.right != null){
-               return up.right;
-           } else {
-               up = up.next;
-               if (up == null) return null;
-               while(up.left == null && up.right == null){
-                   up = up.next;
-                   if (up == null) return null;
-               }
-               if (up.left != null){
-                   return up.left;
-               } else{
-                   return up.right;
-               }
-             
-           }
-       } else {
-            up = up.next;
-            if (up == null) return null;
-            while(up.left == null && up.right == null){
-                   up = up.next;
-                   if (up == null) return null;
-               }
-               if (up.left != null){
-                   return up.left;
-               } else{
-                   return up.right;
-               }
-           
-       }
-    }
+}
