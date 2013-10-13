@@ -1,0 +1,42 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> subsets(int[] S) {
+        Comparator<ArrayList<Integer>> comp = new Comparator<ArrayList<Integer>>(){
+            public int compare(ArrayList<Integer> s1, ArrayList<Integer> s2){
+                if (s1.size() > s2.size()) return 1;
+                if (s1.size() < s2.size()) return -1;
+                else {
+                    int i = 0;
+                    while(i < s1.size()){
+                        if (s1.get(i) > s2.get(i)) return 1;
+                        if (s1.get(i) < s2.get(i)) return -1;
+                        else i++;
+                    }
+                    return 0;
+                }
+            }   
+        };
+        
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> sub = new ArrayList<Integer>();
+        for (int num = 0; num <= S.length; num++){
+            findsubsets(S, num, 0, result, sub);
+        }
+        Collections.sort(result, comp);
+        return result;
+    }
+    
+    public void findsubsets(int[] S, int num, int idx, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> sub){
+        if (sub.size() == num){
+            ArrayList<Integer> clone = new ArrayList<Integer>(sub);
+            Collections.sort(clone);
+            result.add(clone);
+            return;
+        }
+        
+        for (int i = idx; i < S.length; i++){
+            sub.add(S[i]);
+            findsubsets(S, num, i + 1, result, sub);
+            sub.remove(sub.size() - 1);
+        }
+    }
+}
