@@ -1,0 +1,54 @@
+//Iterative solution: let root.left be the new root, append current root to the rightMost of root.left
+
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ArrayList<Integer> inorderTraversal(TreeNode root){
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if (root == null) return result;
+        if (root.left == null && root.right == null) {
+            result.add(root.val);
+            return result;
+        }
+        root = transform(root);
+        TreeNode n = root;
+        while(n.right != null){
+            result.add(n.val);
+            n = n.right;
+            n = transform(n);
+        }
+        result.add(n.val);
+        return result;
+    }
+    public TreeNode transform(TreeNode root){
+        while (root.left != null){
+            TreeNode rightMost = findRightMost(root.left);
+            TreeNode tmp = root;
+            root = root.left;
+            rightMost.right = tmp;
+            tmp.left = null;
+        }
+        return root;
+    }
+    public TreeNode findRightMost(TreeNode root){
+        if (root.right == null) return root;
+        else return findRightMost(root.right);
+    }
+    
+    // Trival Solution: recursion
+    // public ArrayList<Integer> inorderTraversal(TreeNode root) {
+    //     ArrayList<Integer> result = new ArrayList<Integer>();
+    //     if (root == null) return result;
+    //     result.addAll(inorderTraversal(root.left));
+    //     result.add(root.val);
+    //     result.addAll(inorderTraversal(root.right));
+    //     return result;
+    // }
+}
