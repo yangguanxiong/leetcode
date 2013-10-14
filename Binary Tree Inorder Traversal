@@ -1,4 +1,6 @@
+
 //Iterative solution: let root.left be the new root, append current root to the rightMost of root.left
+
 
 /**
  * Definition for binary tree
@@ -18,13 +20,12 @@ public class Solution {
             return result;
         }
         root = transform(root);
-        TreeNode n = root;
-        while(n.right != null){
-            result.add(n.val);
-            n = n.right;
-            n = transform(n);
+        while(root.right != null){
+            result.add(root.val);
+            root = root.right;
+            root = transform(root);
         }
-        result.add(n.val);
+        result.add(root.val);
         return result;
     }
     public TreeNode transform(TreeNode root){
