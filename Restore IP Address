@@ -1,0 +1,42 @@
+public class Solution {
+    public ArrayList<String> restoreIpAddresses(String s) {
+        ArrayList<String> result = new ArrayList<String>();
+        StringBuilder sb = new StringBuilder();
+        if (s.length() < 4 || s.length() > 12) return result;
+        
+        findIP(s, 1, 0, result, sb);
+        return result;
+    }
+    
+    public void findIP(String s, int count, int idx, ArrayList<String> result, StringBuilder sb){
+        if (idx > s.length() - 1) return;
+        if(count == 4){
+            String last = s.substring(idx, s.length());
+            if (last.length() > 1 && last.charAt(0) == '0' ) return;
+            if (last.length()>=1 && last.length()<=3 && Integer.parseInt(last) <= 255){
+                sb.append(last);
+                result.add(sb.toString());
+                sb.delete(sb.length() - last.length(), sb.length());
+            }
+            return;
+        }
+        
+        if (s.charAt(idx) == '0'){
+    		    String part = "0";
+    		    sb.append(part);
+            sb.append('.');
+            findIP(s, count + 1, idx + 1, result, sb);
+            sb.delete(sb.length() - part.length() -1, sb.length());
+    	} else {
+    		 for (int i = idx + 1; i <= idx + 3 && i <= s.length(); i++){   
+	            String part = s.substring(idx, i);
+	            if (Integer.parseInt(part) <= 255){
+	                sb.append(part);
+	                sb.append('.');
+	                findIP(s, count + 1, i, result, sb);
+	                sb.delete(sb.length() - part.length() -1, sb.length());
+	            }
+	        }    		
+    	}
+    }
+}
