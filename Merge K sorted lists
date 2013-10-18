@@ -11,33 +11,30 @@
  */
 public class Solution {
     public ListNode mergeKLists(ArrayList<ListNode> lists) {
-        if(lists.size() == 0) return null;
-        
-        Comparator<ListNode> comp = new Comparator<ListNode>(){
-            public int compare(ListNode n1, ListNode n2){
-                if(n1.val > n2.val) return 1;
-                if(n2.val > n1.val) return -1;
-                else return 0;
-            }    
-        };
-        
-        Queue<ListNode> q = new PriorityQueue<ListNode>(lists.size(), comp);
-        
-        for (ListNode n : lists){
-            if (n != null) q.add(n);
-        }
-        ListNode result = null;
-        ListNode r = null;
-        while(!q.isEmpty()){
-            if (result == null){
-                result = q.poll();
-                r = result;
-            } else {
-                r.next = q.poll();
-                r = r.next;
-            }
-            if (r.next != null) q.add(r.next);
-        }
-        return result;
+       if(lists.size() == 0) return null;
+       
+       Queue<ListNode> q = new PriorityQueue<ListNode>(lists.size(), new Comparator<ListNode>(){
+           public int compare(ListNode n1, ListNode n2){
+               if (n1.val > n2.val) return 1; //minHeap
+               if (n1.val < n2.val) return -1;
+               else return 0;
+           }
+       }); 
+       
+       for (ListNode n : lists){
+           if (n != null) q.add(n);
+       }
+       ListNode newHead = new ListNode(0);
+       ListNode cur = newHead;
+       
+       while(!q.isEmpty()){
+           ListNode n = q.poll();
+           cur.next = n;
+           if (n.next != null){
+               q.add(n.next);
+           }
+           cur = cur.next;
+       }
+       return newHead.next;
     }
 }
