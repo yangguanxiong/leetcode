@@ -7,19 +7,27 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+ 
+ /**
+  * Assumption: there is no duplicate elements int the tree
+  * BST condition: left.data < root.data < right.data
+  * Method: add upper & lower bound
+  * Time complexity: O(n), where n is the number of nodes int the tree. 
+  * This is the best we can do since any algorithm must touch all nodes. 
+  */
 public class Solution {
     public boolean isValidBST(TreeNode root) {
-        return isValidBST( root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        return isValidBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
     
     public boolean isValidBST(TreeNode root, int min, int max){
-        if (root == null ) return true;
+        if (root == null) return true;
         if (root.val >= max || root.val <= min) return false;
         
         boolean l = isValidBST(root.left, min, root.val);
         boolean r = isValidBST(root.right, root.val, max);
-        
-        return l && r;
-        
+        return l && r; 
     }
+    
+    
 }
