@@ -1,25 +1,32 @@
- public boolean isBalanced(TreeNode root) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        if (root == null ) return true;
-        int l = getHeight(root.left);
-        int r = getHeight(root.right);
-        boolean flag = true;
-        if( Math.abs(l-r) > 1){
-            flag = false;
-        }
-        
-        return isBalanced(root.left) && isBalanced(root.right) && flag;
-        
-        
-        
-    }
-    public int getHeight(TreeNode n ){
-        if (n == null) return 0;
-        int l = getHeight(n.left);
-        int r = getHeight(n.right);
-        
-        return l > r ? (1+l): (1+ r);
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ /**
+  * check height of left subtree and right subtree
+  * O(n) time , O(logn) space
+  * */
+public class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if (checkHeight(root) == -1) return false;
+        else return true;
     }
     
+    public int checkHeight(TreeNode root){
+        if (root == null) return 0;
+        int leftHeight = checkHeight(root.left);
+        if (leftHeight == -1) return -1;
+        int rightHeight = checkHeight(root.right);
+        if (rightHeight == -1) return -1;
+        
+        int diff = Math.abs(leftHeight - rightHeight);
+        if (diff > 1) return -1;
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
     
+}
