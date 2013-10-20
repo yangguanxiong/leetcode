@@ -1,0 +1,22 @@
+
+/**
+ * Using HashMap to store target - num[i] and i,
+ * O(n) time
+ * 
+ */
+public class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int[] result = new int[2];
+        HashMap<Integer,Integer> map = new HashMap<Integer, Integer>();
+        for (int i = 0; i < numbers.length; i++){
+            if (!map.containsKey(numbers[i])){
+                map.put(target - numbers[i], i);
+            } else {
+                result[1] = i + 1;
+                result[0] = map.get(numbers[i]) + 1;
+                break;
+            }
+        }
+        return result;
+    }
+}
