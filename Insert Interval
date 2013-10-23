@@ -1,0 +1,54 @@
+// traverse the intervals to find a right place to merge
+// if no merge, insert at right place and return
+// if merged, fix the intervals list
+
+/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+public class Solution {
+    public ArrayList<Interval> insert(ArrayList<Interval> intervals, Interval newInterval) {
+        if (intervals.size() == 0 ) {
+            intervals.add(newInterval);
+            return intervals;
+        }
+        int mergeIdx = -1;
+        for (int i = 0; i < intervals.size(); i++){
+            if (newInterval.start <= intervals.get(i).start){
+                if (newInterval.end < intervals.get(i).start){
+                    intervals.add(i, newInterval);
+                    return intervals;
+                } else {
+                    intervals.get(i).start = newInterval.start;
+                    intervals.get(i).end = Math.max(intervals.get(i).end, newInterval.end);
+                    mergeIdx = i;
+                    break;
+                }
+            } else if (newInterval.start <= intervals.get(i).end){
+                intervals.get(i).end = Math.max(intervals.get(i).end, newInterval.end);
+                mergeIdx = i;
+                break;
+            }
+        }
+        
+        if (mergeIdx == -1) {
+            intervals.add(newInterval);
+            return intervals;
+        }
+        
+        while(mergeIdx < intervals.size() - 1){
+            if (intervals.get(mergeIdx).end >= intervals.get(mergeIdx + 1).start){
+                intervals.get(mergeIdx).end = Math.max(intervals.get(mergeIdx).end, intervals.get(mergeIdx + 1).end);
+                intervals.remove(mergeIdx + 1);
+            } else {
+                break;
+            }
+        }
+        return intervals;
+    }
+}
