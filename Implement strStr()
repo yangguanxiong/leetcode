@@ -1,0 +1,19 @@
+public class Solution {
+    public String strStr(String haystack, String needle) {
+        if (haystack.length() == 0 && needle.length() == 0 ) return "";
+        if (needle.length() == 0) return haystack;
+        if (haystack.length() < needle.length()) return null;
+        int h = 0;
+        while (true){
+            int n = 0;
+            int r = h;
+            while(n < needle.length() && h < haystack.length() && needle.charAt(n) == haystack.charAt(h)){
+                n++;
+                h++;
+            }
+            if (n == needle.length()) return haystack.substring(r);  // beginIndex
+            if (h == haystack.length()) return null;
+            h = r + 1;
+        }
+    }
+}
