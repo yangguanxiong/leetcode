@@ -36,10 +36,8 @@ public class Solution {
                 nextNum = 0;
             }
         }
-        ArrayList<ArrayList<Integer>> r = new ArrayList<ArrayList<Integer>>();
-        for (int i = result.size() - 1; i >= 0; i-- ){
-            r.add(result.get(i));
-        }
-        return r;
+        Collections.reverse(result);
+       
+        return result;
     }
 }
