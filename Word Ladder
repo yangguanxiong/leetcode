@@ -1,0 +1,106 @@
+//BFS solution: similar to Tree LeveL Order Traversal
+
+public class Solution1 {
+    public int ladderLength(String start, String end, HashSet<String> dict) {
+        if(dict.size() == 0) return 0;
+        HashSet<String> visited = new HashSet<String>();
+        
+        Queue<String> q = new LinkedList<String>();
+        q.add(start);
+        int cur = 1;
+        int next = 0;
+        dict.add(end);
+        int steps = 1;
+        
+        while(!q.isEmpty()){
+            String s = q.poll();
+            cur--;
+            if (s.equals(end)){
+                return steps;
+            } else {
+                for (int i = 0; i < s.length(); i++){
+                    StringBuilder sb = new StringBuilder(s);
+                    for (char c = 'a'; c <= 'z'; c++){
+                        sb.setCharAt(i, c);
+                        if (dict.contains(sb.toString()) && !visited.contains(sb.toString())){
+                            q.add(sb.toString());
+                            visited.add(sb.toString());
+                            next++;
+                        }
+                    }
+                }
+            }
+            if (cur == 0){
+                steps++;
+                cur = next;
+                next = 0;
+            }
+        }
+        return 0;
+    }
+    
+}
+
+
+
+/////////////////
+// two HashMap solution: works only when the size of dict is small
+// Time limited exceed for large dict
+// Pay attention to avoid ConcurrentModificationException
+
+
+ public static int ladderLength(String start, String end, HashSet<String> dict) {
+	        HashMap<String , Integer> startMap = new HashMap<String, Integer>();
+	        HashMap<String , Integer> endMap = new HashMap<String, Integer>();
+	        startMap.put(start, 1);
+	        endMap.put(end, 1);
+	        int round = 1;
+	        while (true){
+	            int lastSize = dict.size();
+	            Iterator<String> iter = dict.iterator();
+	            //Use iterator to avoid ConcurrentModificationException
+	            //cannot use enhanced for here
+//	            for (String s : dict)
+	            while(iter.hasNext()){
+	            	String s = iter.next();
+	                //check if it could be add to start map 
+	                boolean sAble = isAbleToAdd(startMap, s, round);
+	                //check if it could be add to end map
+	                boolean eAble = isAbleToAdd(endMap, s, round);
+	                
+	                // both true, return; one true, remove from dict;
+	                if (sAble && s.equals(end)) return 2;
+	                if (sAble && eAble){
+	                    return round * 2 + 1;
+	                }
+	                if (sAble){
+	                    startMap.put(s, round + 1);
+	                    iter.remove();  // avoid cocurrentModificationException
+//	                    dict.remove(s);
+	                }
+	                if (eAble){
+	                    endMap.put(s, round + 1);
+	                    iter.remove();
+//	                    dict.remove(s);
+	                }
+	            }
+	            if (lastSize == dict.size()) break;
+	            round++;
+	        }
+	        return 0;
+	    }
+	    
+	    public static boolean isAbleToAdd(HashMap<String, Integer> map, String word, int round){
+	        for (String key : map.keySet()){
+	            if (map.get(key) == round){
+	                int sameChar = 0;
+	                for (int i = 0; i < key.length(); i++){
+	                    if (key.charAt(i) == word.charAt(i)) {
+	                        sameChar++;
+	                    }
+	                }
+	                if (sameChar == key.length() - 1) return true;
+	            }
+	        }
+	        return false;
+	    }
