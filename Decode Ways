@@ -1,53 +1,29 @@
-public int numDecodings(String s) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
+// dp: int[] dp = new int[s.length()]; 
+// dp[i] represents the decode ways of substring from 0 to i
+// figure out the cases i < 1 and i == 1
+// if i > 1: if bit i could be combined with bit i-1, dp[i] += dp[i-2]
+//           if bit i is from 1 to 9, dp[i] += dp[i-1]
+
+public class Solution {
+    public int numDecodings(String s) {
         if (s.length() == 0 ) return 0;
         if (s.charAt(0) == '0') return 0;
-        
         if ( s.length() == 1) {
-            if (s.charAt(0) == '0') {
-                return 0;
-            } else {
-                return 1;
-            }
-            
+           return 1;
         }
+        int[] dp = new int[s.length()];
+        dp[0] = 1;
         
-        if (s.length() == 2 ){
-            
-            if (Integer.parseInt(s) <= 10 || Integer.parseInt(s) == 20) {
-                return 1;
-            } else if ( Integer.parseInt(s) > 26 ){
-                if (Integer.parseInt(s) % 10 != 0){
-                    return 1;
-                } else {
-                  return 0;  
-                }
-                
+        for (int i = 1; i < dp.length; i++){
+            String sub = s.substring(i-1, i+1);
+            if (i == 1) {
+              if (Integer.parseInt(sub) <= 26) dp[1]++;  
             } else {
-                return 2;
+              if (Integer.parseInt(sub) <= 26 && Integer.parseInt(sub) >= 10) dp[i] += dp[i-2];  
             }
+            if (s.charAt(i) != '0') dp[i] += dp[i-1];
         }
-        
-        
-        int count = 0;
-        
-        if (s.charAt(0) == '1'){
-            //
-            count += numDecodings(s.substring(1, s.length()));
-            count += numDecodings(s.substring(2, s.length()));
-        } else if ( s.charAt(0) == '2'){
-            //
-            if (s.charAt(1) <= '6' ){
-                count += numDecodings(s.substring(1, s.length()));
-                count += numDecodings(s.substring(2, s.length()));
-                
-            } else {
-                count += numDecodings(s.substring(1, s.length()));
-            }
-        } else {
-            count += numDecodings(s.substring(1, s.length()));
-        }
-        return count;
-        
+        return dp[dp.length - 1];
+       
     }
+}
