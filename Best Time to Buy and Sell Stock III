@@ -1,0 +1,31 @@
+
+// Idea from https://github.com/AnnieKim/LeetCode/blob/master/BestTimetoBuyandSellStockIII.h
+// using to arrays with the same length as prices[] as cache to store the intermediate result;
+// L2R: save the left part of result
+// R2L: save the right part of the result
+
+public class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices.length < 2) return 0;
+        
+        int[] l2r = new int[prices.length];
+        int[] r2l = new int[prices.length];
+        
+        int dpL = prices[0];
+        
+        for (int i = 1; i < prices.length; i++){
+            l2r[i] = Math.max(l2r[i-1], prices[i] - dpL);
+            dpL = Math.min(dpL, prices[i]);
+        }
+        int dpR = prices[prices.length - 1];
+        for (int j = prices.length - 2; j >= 0; j--){
+            r2l[j] = Math.max(r2l[j+1], dpR - prices[j]);
+            dpR = Math.max(dpR, prices[j]);
+        }
+        int result = l2r[l2r.length - 1];
+        for (int i = 1; i < l2r.length - 2; i++){
+            result = Math.max(result, l2r[i] + r2l[i+1]);
+        }
+        return result;
+    }
+}
