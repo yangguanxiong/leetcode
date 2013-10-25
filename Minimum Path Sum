@@ -17,7 +17,7 @@ public class Solution {
             }
             return sum;
         }
-        
+        // solution 1: add to the beginning
         for (int i = m - 2; i >= 0 ; i--){
             grid[i][n-1] += grid[i+1][n-1] ;
         }
@@ -30,5 +30,19 @@ public class Solution {
             }
         }
         return grid[0][0];
+        
+        // solution 2: dp, do not change grid
+        //   int[] dp = new int[n];
+        //   dp[0] = grid[0][0];
+        //   for (int i = 1; i < n; i++){
+        //       dp[i] = grid[0][i] + dp[i-1];
+        //   }
+        //   for (int i = 1; i < m; i++){
+        //       dp[0] += grid[i][0];
+        //       for (int j = 1; j< n; j++){
+        //           dp[j] = grid[i][j] + Math.min(dp[j], dp[j-1]);
+        //       }
+        //   }
+        //   return dp[n-1];
     }
 }
