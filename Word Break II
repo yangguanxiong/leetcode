@@ -1,0 +1,54 @@
+// DFS + DP
+
+
+public class Solution {
+    public ArrayList<String> wordBreak(String s, Set<String> dict) {
+        ArrayList<String> result = new ArrayList<String>();
+        if (s.length() == 0) return result;
+        if (!isAbleToBreak(s, dict)) return result;  // check if s is able to break
+        StringBuffer sb = new StringBuffer();
+        wordBreakHelper(s, 0, dict, result, sb);
+        return result;
+    }
+    
+    public void wordBreakHelper(String s, int idx, Set<String> dict, ArrayList<String> result, StringBuffer sb){
+        //idx = s.length
+        if (idx == s.length()){
+            sb.deleteCharAt(sb.length() - 1);  //delete the last space
+            result.add(sb.toString());
+            sb.append(' ');
+            return;
+        }
+        
+        for (int i = idx + 1; i <= s.length(); i++){
+            String sub = s.substring(idx, i);
+            if (dict.contains(sub)) {
+                sb.append(sub);
+                sb.append(' ');
+                wordBreakHelper(s, i , dict, result, sb);
+                sb.delete(sb.length() - sub.length() - 1 , sb.length());  // delete(start, end) start: inclusive; end: exclusive
+            }
+        }
+    }
+    
+    public boolean isAbleToBreak(String s, Set<String> dict){   // Question WordBreak I
+        ArrayList<Integer> dp = new ArrayList<Integer>();
+        dp.add(0);
+        boolean found = false;
+        for (int i = 1; i <= s.length(); i++){
+            for (int start = 0; start < dp.size(); start++){
+                String sub = s.substring(dp.get(start), i);
+                if (dict.contains(sub)){
+                    found = true;
+                    break;
+                }
+            }
+            if (found){
+                dp.add(i);
+                found = false;
+            }
+        }
+        if (dp.get(dp.size() - 1) == s.length()) return true;
+        return false;
+    }
+}
