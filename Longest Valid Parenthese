@@ -1,0 +1,22 @@
+//Idea from: https://github.com/AnnieKim/LeetCode/blob/master/LongestValidParentheses.h
+// O(n) time and one pass
+public class Solution {
+    public int longestValidParentheses(String s) {
+        if (s.length() <= 1) return 0;
+        Stack<Integer> stk = new Stack<Integer>();
+        int result = 0;  // num of pairs
+        int count = 0; //count left parenthese
+        for (int i = 0; i < s.length(); i++){
+            if (s.charAt(i) == '('){
+                stk.push(count);
+                count = 0;
+            } else if (!stk.isEmpty()){
+                count += (1 + stk.pop());
+                result = Math.max(result, count);
+            } else {
+                count = 0;
+            }
+        }
+        return result * 2;
+    }
+}
