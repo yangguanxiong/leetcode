@@ -1,0 +1,41 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void recoverTree(TreeNode root) {
+        //solution 1: O(n) space
+        if (root == null) return;
+        ArrayList<TreeNode> inOrderList = new ArrayList<TreeNode>();
+        inOrderTraversal(root, inOrderList);
+        TreeNode first = null;
+        TreeNode second = null;
+        
+        for (int i = 1; i < inOrderList.size(); i++){
+            if (inOrderList.get(i-1).val < inOrderList.get(i).val){
+                continue;
+            }
+            if (first == null){
+                first = inOrderList.get(i - 1);
+            }
+            second = inOrderList.get(i);
+        }
+        
+        int tmp = first.val;
+        first.val = second.val;
+        second.val = tmp;
+        
+    }
+    
+    public void inOrderTraversal(TreeNode root,  ArrayList<TreeNode> r){
+        if (root == null) return;
+        inOrderTraversal(root.left, r);
+        r.add(root);
+        inOrderTraversal(root.right, r);
+    }
+}
