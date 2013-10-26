@@ -1,0 +1,23 @@
+public class Solution {
+    public boolean wordBreak(String s, Set<String> dict) {
+        ArrayList<Integer> dp = new ArrayList<Integer>();
+        if (s.length() == 0) return true;
+        dp.add(0);
+        boolean found = false;
+        for (int i = 1; i <= s.length(); i++){
+            for (int start = 0; start < dp.size(); start++){
+                String sub = s.substring(dp.get(start), i);
+                if (dict.contains(sub)){
+                    found = true;
+                    break;
+                }
+            }
+            if (found){
+                dp.add(i);
+                found = false;
+            }
+        }
+        if (dp.get(dp.size() - 1) == s.length()) return true;
+        return false;
+    }
+}
