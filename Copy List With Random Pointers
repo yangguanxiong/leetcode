@@ -6,8 +6,35 @@
  *     RandomListNode(int x) { this.label = x; }
  * };
  */
+ // Constant Space solution: idea from https://github.com/AnnieKim/LeetCode/blob/master/CopyListwithRandomPointer.h
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
+        // constant space solution
+        if (head == null) return head;
+        for (RandomListNode cur = head; cur != null; cur = cur.next.next){
+            RandomListNode newNode = new RandomListNode(cur.label);
+            newNode.next = cur.next;
+            cur.next = newNode;
+        }
+        for (RandomListNode cur = head; cur != null; cur = cur.next.next){
+            if (cur.random != null)
+            cur.next.random = cur.random.next;
+        }
+        RandomListNode newHead = new RandomListNode(0);
+        RandomListNode r = newHead;
+        for(RandomListNode cur = head; cur != null; cur = cur.next){
+            r.next = cur.next;
+            r = r.next;
+            cur.next = cur.next.next;
+        }
+        return newHead.next;
+    }
+}
+ 
+// my Original Solution using HashMap
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+       
         if (head == null) return null;
         RandomListNode newHead = new RandomListNode(head.label);
         HashMap<RandomListNode , RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
