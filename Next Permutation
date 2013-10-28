@@ -1,0 +1,23 @@
+// Classical Algorithm:
+
+public class Solution {
+    public void nextPermutation(int[] num) {
+        if (num.length <= 1) return;
+        int i = num.length - 1;
+        while(i > 0 && num[i] <= num[i-1]){
+            i--;
+        }
+       
+        Arrays.sort(num, i, num.length);
+        if (i == 0) return;
+        for (int j = i; j < num.length; j++){
+            if (num[j] > num[i-1]){
+                int tmp = num[i-1];
+                num[i-1] = num[j];
+                num[j] = tmp;
+                break;
+            }
+        }
+        return;
+    }
+}
