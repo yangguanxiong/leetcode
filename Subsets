@@ -1,4 +1,36 @@
 public class Solution {
+    // sort the input array first, then compute the subsets
+
+    public ArrayList<ArrayList<Integer>> subsets(int[] S) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> sub = new ArrayList<Integer>();
+        result.add(sub);
+        Arrays.sort(S);
+        if (S.length == 0){
+            return result;
+        }
+        for (int k = 1; k <= S.length; k++){
+            findSubsets(S, k, 0, sub, result);
+        }
+        return result;
+    }
+    
+    public void findSubsets(int[] S, int num, int idx, ArrayList<Integer> sub, ArrayList<ArrayList<Integer>> result){
+        if (sub.size() == num){
+            ArrayList<Integer> clone = new ArrayList<Integer>(sub);
+            result.add(clone);
+            return;
+        }
+        
+        for (int i = idx; i < S.length; i++){
+            sub.add(S[i]);
+            findSubsets(S, num, i + 1, sub, result);
+            sub.remove(sub.size() - 1);
+        }
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // get the result then sort the result:
     public ArrayList<ArrayList<Integer>> subsets(int[] S) {
         Comparator<ArrayList<Integer>> comp = new Comparator<ArrayList<Integer>>(){
             public int compare(ArrayList<Integer> s1, ArrayList<Integer> s2){
