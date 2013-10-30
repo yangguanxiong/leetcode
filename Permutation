@@ -2,31 +2,29 @@
 
 public class Solution {
    
-    public ArrayList<ArrayList<Integer>> permute(int[] num) {
+    public ArrayList<ArrayList<Integer>> permute(int[] num){
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> p = new ArrayList<Integer>();
         if (num.length == 0) return result;
-        
-        boolean[] avail = new boolean[num.length];
-        ArrayList<Integer> sub = new ArrayList<Integer>();
-        
-        findPermutation(num, avail, result, sub);
+        boolean[] used = new boolean[num.length];
+        findPermutation(num, used, p, result);
         return result;
-   
     }
     
-    public void findPermutation(int[] num, boolean[] avail, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> sub){
-        if (sub.size() == num.length){
-            //add to result
-            ArrayList<Integer> subCopy = new ArrayList<Integer>(sub);
-            result.add(subCopy);
+    public void findPermutation(int[] num, boolean[] used, ArrayList<Integer> p, ArrayList<ArrayList<Integer>> result){
+        if (p.size() == num.length){
+            ArrayList<Integer> clone = new ArrayList<Integer>(p);
+            result.add(clone);
+            return;
         }
+        
         for (int i = 0; i < num.length; i++){
-            if (avail[i] == false){
-              avail[i] = true;
-              sub.add(num[i]);
-              findPermutation(num, avail, result, sub);
-              sub.remove(sub.size() - 1);
-              avail[i] = false;  
+            if (used[i] == false){
+                p.add(num[i]);
+                used[i] = true;
+                findPermutation(num, used, p, result);
+                used[i] = false;
+                p.remove(p.size() - 1);
             }
         }
     }
