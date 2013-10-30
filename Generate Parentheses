@@ -1,29 +1,22 @@
 public class Solution2 {
-    public ArrayList<String> result = new ArrayList<String>();
-    public ArrayList<String> generateParenthesis(int n) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        result.clear();
-        StringBuilder s = new StringBuilder();
-        if (n > 0){
-            generateParenthesisHelper(n, n, s);
+   public ArrayList<String> generateParenthesis(int n) {
+        ArrayList<String> result = new ArrayList<String>();
+        StringBuffer sb = new StringBuffer();
+        if (n == 0){
+            result.add(sb.toString());
+            return result;
+        } else {
+            generateParenthesisHelper(n, n, sb, result);
         }
         return result;
     }
-    public void generateParenthesisHelper(int left, int right, StringBuilder s){
-        if(left == 0 && right == 0){
-            result.add(s.toString());
+    public void generateParenthesisHelper(int l, int r, StringBuffer sb, ArrayList<String> result){
+        if (l == 0 && r == 0){
+            result.add(sb.toString());
         }
-        if (left > 0){
-            generateParenthesisHelper(left - 1, right, s.append("("));
-        }
-        if (right > left){
-            generateParenthesisHelper(left, right - 1, s.append(")"));
-        }
-        if (s.length() > 0){
-        	s.deleteCharAt(s.length() - 1);
-        }
-        
+        if (l > 0) generateParenthesisHelper(l - 1, r, sb.append('('), result);
+        if (r > l) generateParenthesisHelper(l, r - 1, sb.append(')'), result);
+        if (sb.length() > 0) sb.deleteCharAt(sb.length() - 1);
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////
