@@ -1,40 +1,32 @@
-
 //find permutations: DFS, similar with Path Sum II
 //sort the Array, use lastIdx to check if the element is duplicated
 
-
-public class Solution {
     public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         if (num.length == 0) return result;
+        ArrayList<Integer> p = new ArrayList<Integer>();
+        boolean[] used = new boolean[num.length];
         Arrays.sort(num);
-        ArrayList<Integer> sub = new ArrayList<Integer>();
-        boolean[] avail = new boolean[num.length];
-        
-        findPermuteUnique(num,avail, result, sub);
+        findPermutations(num, used, p, result);
         return result;
     }
     
-    public void findPermuteUnique(int[] num, boolean[] avail, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> sub){
-        if (sub.size() == num.length){
-            ArrayList<Integer> subCopy = new ArrayList<Integer>(sub);
-            result.add(subCopy);
+    public void findPermutations(int[] num, boolean[] used, ArrayList<Integer> p, ArrayList<ArrayList<Integer>> result){
+        if (p.size() == num.length){
+            ArrayList<Integer> clone = new ArrayList<Integer>(p);
+            result.add(clone);
             return;
         }
-        int lastIdx = -1;
+        int lastIndex = -1;
         for (int i = 0; i < num.length; i++){
-            if (lastIdx != -1 && num[i] == num[lastIdx]) continue;
-            if (!avail[i]){
-                
-                avail[i] = true;
-                sub.add(num[i]);
-                findPermuteUnique(num, avail, result, sub);
-                sub.remove(sub.size() - 1);
-                avail[i] = false;
-                lastIdx = i;
+            if (lastIndex != -1 && num[i] == num[lastIndex]) continue;
+            if (!used[i]){
+                p.add(num[i]);
+                used[i] = true;
+                findPermutations(num, used, p, result);
+                p.remove(p.size() - 1);
+                used[i] = false;
+                lastIndex = i;
             }
         }
     }
-}
