@@ -1,0 +1,33 @@
+public class Solution {
+    public int romanToInt(String s) {
+        if (s.length() == 0) return 0;
+        if (s.length() == 1) return getDigit(s.charAt(0));
+        
+        int result = getDigit(s.charAt(s.length() - 1));
+        int prev = result;
+        
+        for (int k = s.length() - 2; k >= 0; k--){
+            int val = getDigit(s.charAt(k));
+            if (val < prev){
+                result -= val;
+            } else {
+                result += val;
+                prev = val;
+            }
+        }
+        return result;
+    }
+    
+    public int getDigit(char c){
+        switch(c) {
+    		case 'I': return 1;
+    		case 'V': return 5;
+    		case 'X': return 10;
+    		case 'L': return 50;
+    		case 'C': return 100;
+    		case 'D': return 500;
+    		case 'M': return 1000;
+    		default: return 0;
+        }
+    }
+}
