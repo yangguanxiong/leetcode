@@ -1,23 +1,24 @@
 public class Solution {
     public ArrayList<ArrayList<Integer>> combinationSum2(int[] num, int target) {
-        // Note: The Solution object is instantiated only once and is reused by each test case.
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> sub = new ArrayList<Integer>();
+        if (num.length == 0) return result;
         Arrays.sort(num);
-        combinationSumII(num, target, result, sub, 0);
+        ArrayList<Integer> sub = new ArrayList<Integer>();
+        combinationSum2Helper(num, target, 0, sub, result);
         return result;
     }
-   
-    public void combinationSumII(int[] num, int target, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> sub, int idx){
-         if (target == 0){
+    
+    public void combinationSum2Helper(int[] num, int target, int idx, ArrayList<Integer> sub, ArrayList<ArrayList<Integer>> result){
+        if (target == 0){
             ArrayList<Integer> clone = new ArrayList<Integer>(sub);
-            result.add(clone);  
-         }
-         
-         for (int i = idx; i < num.length && target >= num[i]; i++){
-            if (i > idx && num[i] == num[i-1]) continue; 
+            result.add(clone);
+            return;
+        }
+        
+        for (int i = idx; i < num.length && target >= num[i]; i++){
+            if  (i > idx && num[i] == num[i-1]) continue;
             sub.add(num[i]);
-            combinationSumII(num, target - num[i], result, sub, i + 1);
+            combinationSum2Helper(num, target - num[i], i + 1, sub, result);
             sub.remove(sub.size() - 1);
         }
     }
