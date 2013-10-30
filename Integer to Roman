@@ -1,0 +1,27 @@
+public class Solution {
+    public String intToRoman(int num) {
+        String table[][] = {
+				{ "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" },
+				{ "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" },
+				{ "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" },
+				{ "M", "MM", "MMM", "", "", "", "", "", "" }};
+		int a = num / 1000;
+		int b = num / 100 % 10;
+		int c = num / 10 % 10;
+		int d = num % 10;
+		StringBuffer sb = new StringBuffer();
+		if (a != 0){
+		    sb.append(table[3][a-1]);
+		}
+		if (b != 0){
+		    sb.append(table[2][b-1]);
+		}
+		if (c != 0){
+		    sb.append(table[1][c-1]);
+		}
+		if (d != 0){
+		    sb.append(table[0][d-1]);
+		}
+		return sb.toString();
+    }
+}
