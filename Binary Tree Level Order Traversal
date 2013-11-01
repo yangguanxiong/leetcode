@@ -7,7 +7,31 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+ // Solution 2: DFS
+ // Solution 1: BFS, using to variables
+ 
+public class Solution2 {
+    public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        levelOrderHelper(root, 0, result);
+        return result;
+    }
+    
+    public void levelOrderHelper(TreeNode root, int level, ArrayList<ArrayList<Integer>> result){
+        if (root == null) return;
+        if (result.size() <= level){
+            ArrayList<Integer> newLevel = new ArrayList<Integer>();
+            result.add(newLevel);
+        }
+        result.get(level).add(root.val);
+        levelOrderHelper(root.left, level + 1, result);
+        levelOrderHelper(root.right, level + 1, result);
+    }
+}
+ 
+ 
+ 
+public class Solution1 {
     public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         if (root == null) return result;
