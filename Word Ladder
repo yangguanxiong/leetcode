@@ -2,39 +2,41 @@
 
 public class Solution1 {
     public int ladderLength(String start, String end, HashSet<String> dict) {
-        if(dict.size() == 0) return 0;
-        HashSet<String> visited = new HashSet<String>();
-        
+        if (dict.size() == 0 ) return 0;
+        int step = 1;
         Queue<String> q = new LinkedList<String>();
         q.add(start);
         int cur = 1;
         int next = 0;
         dict.add(end);
-        int steps = 1;
+        HashSet<String> found = new HashSet<String>();
         
         while(!q.isEmpty()){
             String s = q.poll();
             cur--;
             if (s.equals(end)){
-                return steps;
+                return step;
             } else {
+                
                 for (int i = 0; i < s.length(); i++){
-                    StringBuilder sb = new StringBuilder(s);
+                    StringBuffer sb = new StringBuffer(s); // this stringbuffer must be inside the first for loop
                     for (char c = 'a'; c <= 'z'; c++){
                         sb.setCharAt(i, c);
-                        if (dict.contains(sb.toString()) && !visited.contains(sb.toString())){
+                        if (dict.contains(sb.toString()) && !found.contains(sb.toString())){
+                            found.add(sb.toString());
                             q.add(sb.toString());
-                            visited.add(sb.toString());
                             next++;
                         }
                     }
                 }
+                
+                if (cur == 0){
+                    step++;
+                    cur = next;
+                    next = 0;
+                }
             }
-            if (cur == 0){
-                steps++;
-                cur = next;
-                next = 0;
-            }
+            
         }
         return 0;
     }
