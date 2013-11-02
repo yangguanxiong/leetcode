@@ -11,22 +11,21 @@ public class Solution {
         if (node == null) return null;
         UndirectedGraphNode newGraph = new UndirectedGraphNode(node.label);
         Queue<UndirectedGraphNode> q = new LinkedList<UndirectedGraphNode>();
-        HashMap<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<UndirectedGraphNode,UndirectedGraphNode>();
-        map.put(node, newGraph);
         q.add(node);
+        HashMap<UndirectedGraphNode,UndirectedGraphNode> map = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
+        map.put(node, newGraph);
+        
         while(!q.isEmpty()){
             UndirectedGraphNode n = q.poll();
             UndirectedGraphNode clone = map.get(n);
             for (int i = 0; i < n.neighbors.size(); i++){
-                UndirectedGraphNode oriNeighbor = n.neighbors.get(i);
-                if (!map.containsKey(oriNeighbor)){
-                    UndirectedGraphNode newNeighbor = new UndirectedGraphNode(oriNeighbor.label);
-                    clone.neighbors.add(newNeighbor);
-                    map.put(oriNeighbor, newNeighbor);
-                    q.add(oriNeighbor);
-                } else {
-                    clone.neighbors.add(map.get(oriNeighbor));
+                UndirectedGraphNode Ori = n.neighbors.get(i);
+                if (!map.containsKey(Ori)){
+                    UndirectedGraphNode newNode = new UndirectedGraphNode(Ori.label);
+                    map.put(Ori, newNode);
+                    q.add(Ori);
                 }
+                clone.neighbors.add(map.get(Ori));
             }
         }
         return newGraph;
