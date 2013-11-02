@@ -17,17 +17,17 @@ public class Solution {
             cur.next = newNode;
         }
         for (RandomListNode cur = head; cur != null; cur = cur.next.next){
-            if (cur.random != null)
+            if (cur.random != null)                // don't forget null case!!!!!!!!!!
             cur.next.random = cur.random.next;
         }
-        RandomListNode newHead = new RandomListNode(0);
-        RandomListNode r = newHead;
-        for(RandomListNode cur = head; cur != null; cur = cur.next){
+        RandomListNode dummy = new RandomListNode(0);
+        RandomListNode r = dummy;
+        for (RandomListNode cur = head; cur != null; cur = cur.next){
             r.next = cur.next;
             r = r.next;
-            cur.next = cur.next.next;
+            cur.next = r.next;
         }
-        return newHead.next;
+        return dummy.next;
     }
 }
  
