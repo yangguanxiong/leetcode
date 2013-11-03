@@ -1,33 +1,24 @@
 public class Solution {
     public String addBinary(String a, String b) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         if (a.length() == 0) return b;
         if (b.length() == 0) return a;
-        
+        StringBuffer sb = new StringBuffer();
         int carry = 0;
-        
-        int l = a.length() > b.length() ? a.length() : b.length();
-        
-        StringBuffer r = new StringBuffer();
-        
-        for (int i = 0; i < l ; i++){
+        int l = a.length() > b.length() ? a.length() - 1 : b.length() - 1;
+        for (int i = 0; i <= l; i++){
             int abit = 0; int bbit = 0;
-            if (i < a.length()){
-                abit = Character.getNumericValue(a.charAt(a.length()-1-i));
+            if ( i <= a.length() - 1 ){
+                abit = Character.getNumericValue(a.charAt(a.length() - 1 - i));
             }
-            if (i < b.length()){
-                bbit = Character.getNumericValue(b.charAt(b.length()-1-i));
+            if ( i <= b.length() - 1) {
+                bbit = Character.getNumericValue(b.charAt(b.length() - 1 - i));
             }
-            
-            //r = (abit + bbit + carry)%2 + r;
-            r.insert(0,(abit + bbit + carry)%2 );
-            
-            carry = (abit + bbit + carry)/2;
+            sb.insert(0, (abit + bbit + carry) % 2);
+            carry = (abit + bbit + carry) / 2;
         }
         if (carry == 1){
-            r.insert(0,1);
+            sb.insert(0, 1);
         }
-        return r.toString();
+        return sb.toString();
     }
 }
