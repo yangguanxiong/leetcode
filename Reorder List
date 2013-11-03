@@ -1,0 +1,110 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public void reorderList(ListNode head) {
+        // solution: reverse the second half of the list
+        if (head == null || head.next == null || head.next.next == null) return;
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast.next != null && fast.next.next != null){
+           fast = fast.next.next;
+           slow = slow.next;
+        }
+        ListNode head2 = reverseList(slow.next);
+        slow.next = null;
+        ListNode r1 = head;
+        ListNode r2 = head2;
+        while(r1 != null && r2 != null){
+            ListNode tmp1 = r1.next;
+            r1.next = r2;
+            r1 = tmp1;
+            ListNode tmp2 = r2.next;
+            r2.next = r1;
+            r2 = tmp2;
+        }
+    } 
+    
+    public ListNode reverseList(ListNode head){
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode p = head.next;
+        head.next = null;
+        while (p != null){
+            ListNode nextNode = p.next;
+            p.next = dummy.next;
+            dummy.next = p;
+            p = nextNode;
+        }
+        return dummy.next;
+    }    
+        
+        
+        
+        // Another solution: 4 pointers: time limit exceed
+        
+        // if (head == null || head.next == null || head.next.next == null) return;
+        // ListNode p1 = head;
+        // ListNode p2 = head.next;
+        // ListNode p3 = head;
+        // ListNode p4 = head.next;
+        
+        // while(p4.next != null){
+        //     p3 = p3.next;
+        //     p4 = p4.next;
+        // }
+        
+        // while(p2.next != null){
+        //     p1.next = p4;
+        //     p4.next = p2;
+        //     p3.next = null;
+        //     p4 = p2;
+        //     p1 = p2;
+        //     p2 = p2.next;
+        //     if (p4 == p3) break;
+        //     while(p4.next != p3){
+        //         p4 = p4.next;
+        //     }
+        //     p3 = p4;  // add a new name to the node p4
+        //     p4 = p4.next;
+        //     if (p2 == null) break;
+        // }
+        // return;
+        
+        
+        // My Original solution: time limit exceeded
+        
+        // if (head == null || head.next == null || head.next.next == null) return;
+        // ListNode tail = head.next.next;
+        // while (tail != null){
+        // 	ListNode cur = head.next;
+        //     ListNode tailNext = tail.next;
+        //     tail.next = cur;
+        //     head.next = tail;           
+        //     ListNode prev = tail;
+        //     while (cur != tail && cur.next != tail){
+        //         ListNode curNext = cur.next.next;               
+        //         prev.next = cur.next;
+        //         prev.next.next = cur;
+        //         if (curNext == tail){
+        //         	cur.next = null;
+        //         	break;
+        //         }
+        //         cur.next = curNext;
+        //         prev = cur;
+        //         cur = curNext;
+        //     }            
+        //     tail = tailNext;
+        //     cur.next = tailNext;
+        // }
+        // return;
+}
