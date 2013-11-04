@@ -11,20 +11,50 @@
  */
 public class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        if (head == null || head.next == null){
-            return head;
-        }
+        // solution2： non-recursive 
+        // if (head == null || head.next == null) return head;
+        // ListNode dummy = new ListNode(0);
+        // dummy.next = head;
+        // ListNode p1 = head;
+        // ListNode p2 = head.next;
+        // ListNode p3 = dummy;
+        // while(p2 != null){
+        //     if (p1.val != p2.val){
+        //         p1 = p1.next;
+        //         p2 = p2.next;
+        //         p3 = p3.next;
+        //     } else {
+        //         while(p1.val == p2.val){
+        //             p2 = p2.next;
+        //             if (p2 == null){
+        //                 if (p3 == dummy ) return null;
+        //                 else {
+        //                     p3.next = null;
+        //                     return dummy.next;
+        //                 }
+        //             }
+        //         }
+        //         p3.next = p2;
+        //         p1 = p2;
+        //         p2 = p2.next;
+        //     }
+        // }
+        // return dummy.next;
         
-        ListNode i = head.next;
-        while(head.val == i.val){
-            i = i.next;
-            if (i == null) return null;
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // Solution 1: recursion
+        if (head == null || head.next == null) return head;
+        ListNode p = head.next;
+        while(p.val == head.val){
+            p = p.next;
+            if (p == null) return null;
         }
-        if (head.next != i){
-            return deleteDuplicates(i);
+        if (head.next != p) {
+            return deleteDuplicates(p);
         } else {
-            head.next = deleteDuplicates(i);
+            head.next = deleteDuplicates(p);
         }
         return head;
+        
     }
 }
