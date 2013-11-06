@@ -9,20 +9,15 @@
  */
 public class Solution {
     public TreeNode sortedArrayToBST(int[] num) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        if(num.length ==  0) return null;
-        return convert(num, 0, num.length - 1);
+       return sortedArrayToBST(num, 0, num.length - 1);
     }
-    public TreeNode convert(int[] num, int l, int r){
+    
+    public TreeNode sortedArrayToBST(int[] num, int l, int r){
         if (l > r) return null;
-        if (l == r) return new TreeNode(num[l]);
-        
-        int mid = (l + r)/2;
-        TreeNode root = new TreeNode(num[mid]);
-        root.left = convert(num, l, mid - 1);
-        root.right = convert(num, mid + 1, r);
-        return root;
-        
+        int mid = l + ( r - l) / 2;
+        TreeNode n = new TreeNode(num[mid]);
+        n.left = sortedArrayToBST(num, l, mid - 1);
+        n.right = sortedArrayToBST(num, mid + 1, r);
+        return n;
     }
 }
