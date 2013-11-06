@@ -1,24 +1,22 @@
 public class Solution {
     public int removeDuplicates(int[] A) {
-       if(A.length <= 2) return A.length;
-       int i = 0;
-       int j = 1;
-       int key = A[i];
-       boolean twiceFlag = false;
-       while(j < A.length){
-           if (A[j] == key){
-               if (twiceFlag){
-                   j++;
-               } else {
-                   A[++i] = A[j++];
-                   twiceFlag = true;
-               }
-           } else {
-               key = A[j];
-               A[++i] = A[j++];
-               twiceFlag = false;
-           }
-       }
-       return i+1;
+       if (A.length <= 2) return A.length;
+        int i = 0; 
+        int j = 1;
+        boolean twiceFlag = false;
+        while(j < A.length){
+            if (A[i] != A[j]){
+                A[++i] = A[j++];
+                twiceFlag = false;
+            } else {
+                if (!twiceFlag){
+                    A[++i] = A[j++];
+                    twiceFlag = true;
+                } else {
+                    j++;
+                }
+            }
+        }
+        return i + 1;
     }
 }
