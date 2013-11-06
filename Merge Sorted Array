@@ -1,17 +1,17 @@
 public class Solution {
     public void merge(int A[], int m, int B[], int n) {
-        int k = m + n - 1;
-        m--;
-        n--;
-        while(m >= 0 && n >= 0){
-            if (A[m] > B[n]){
-                A[k--] = A[m--];
+       int idx = m + n - 1;
+        int ia = m - 1;
+        int ib = n - 1;
+        while( ia >= 0  && ib >= 0 ){
+            if (A[ia] > B[ib]){
+                A[idx--] = A[ia--];
             } else {
-                A[k--] = B[n--];
+                A[idx--] = B[ib--];
             }
         }
-        while (n >= 0){
-            A[k--] = B[n--];
+        while(ib >= 0){
+            A[idx--] = B[ib--];
         }
         return;
     }
