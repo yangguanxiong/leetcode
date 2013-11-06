@@ -26,30 +26,29 @@
     
     //////////////////////////////////////////////////////////////////////////////////
     // Another method:
+    // if there are even number of nodes in the list, eg: 1,2,3,4, take node 2 as the root of the tree
     
     public TreeNode sortedListToBST(ListNode head) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
         if (head == null) return null;
-        if (head.next == null) return new TreeNode(head.val);
-        ListNode prev = null;
-        ListNode slow = head;
-        ListNode fast = head;
-        while(fast != null){
-            fast = fast.next;
-            if (fast != null){
-                fast = fast.next;
-                prev = slow;
-                slow = slow.next;
-            }
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode p1 = dummy;
+        ListNode p2 = head;
+        ListNode p3 = head;
+        while(true){
+           p3 = p3.next;
+           if (p3 == null) break;
+           p3 = p3.next;
+           if (p3 == null) break;
+           p2 = p2.next;
+           p1 = p1.next;
         }
-        TreeNode root = new TreeNode(slow.val);
-        root.right = sortedListToBST(slow.next);
-        if(prev == null){
-            root.left = null;
-        } else {
-            prev.next = null;
+        TreeNode root = new TreeNode(p2.val);
+        root.right = sortedListToBST(p2.next);
+        p1.next = null;
+        if (p1 != dummy){
             root.left = sortedListToBST(head);
         }
         return root;
+    
     }
