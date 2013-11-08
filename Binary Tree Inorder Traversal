@@ -1,6 +1,4 @@
 
-//Iterative solution: let root.left be the new root, append current root to the rightMost of root.left
-
 
 /**
  * Definition for binary tree
@@ -15,41 +13,32 @@ public class Solution {
     public ArrayList<Integer> inorderTraversal(TreeNode root){
         ArrayList<Integer> result = new ArrayList<Integer>();
         if (root == null) return result;
-        if (root.left == null && root.right == null) {
-            result.add(root.val);
-            return result;
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        Stack<TreeNode> s2 = new Stack<TreeNode>();
+        s.push(root);
+        while(!s.isEmpty()){
+            TreeNode n = s.peek();
+            if (!s2.isEmpty() && s2.peek() == n){
+                result.add(n.val);
+                s.pop();
+                s2.pop();
+                continue;
+            }
+            if (n.left == null && n.right == null){
+                s.pop();
+                result.add(n.val);
+            } else {
+                s2.push(n);
+                if (n.right != null){
+                    n = s.pop();
+                    s.push(n.right);
+                    s.push(n);
+                }
+                if (n.left != null){
+                    s.push(n.left);
+                }
+            }
         }
-        root = transform(root);
-        while(root.right != null){
-            result.add(root.val);
-            root = root.right;
-            root = transform(root);
-        }
-        result.add(root.val);
         return result;
     }
-    public TreeNode transform(TreeNode root){
-        while (root.left != null){
-            TreeNode rightMost = findRightMost(root.left);
-            TreeNode tmp = root;
-            root = root.left;
-            rightMost.right = tmp;
-            tmp.left = null;
-        }
-        return root;
-    }
-    public TreeNode findRightMost(TreeNode root){
-        if (root.right == null) return root;
-        else return findRightMost(root.right);
-    }
-    
-    // Trival Solution: recursion
-    // public ArrayList<Integer> inorderTraversal(TreeNode root) {
-    //     ArrayList<Integer> result = new ArrayList<Integer>();
-    //     if (root == null) return result;
-    //     result.addAll(inorderTraversal(root.left));
-    //     result.add(root.val);
-    //     result.addAll(inorderTraversal(root.right));
-    //     return result;
-    // }
 }
