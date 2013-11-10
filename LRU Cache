@@ -1,0 +1,100 @@
+// Data structure: hashmap and doubly linked list
+// reminder: be careful when moving a doubly linked list node to the head 
+
+public class LRUCache {
+    private class DListNode{
+		int key;
+		int val;
+		DListNode prev;
+		DListNode next;
+		DListNode(int key, int val){
+			this.key = key;
+			this.val = val;
+			prev = null;
+			next = null;
+		}
+	}
+	private final int capacity;
+	private int curSize;
+	private HashMap<Integer, DListNode> map;
+	private DListNode head;
+	private DListNode tail;
+	
+    
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        this.curSize = 0;
+        map = new HashMap<Integer, DListNode>();
+        head = null;
+        tail = null;
+        
+    }
+    
+    public int get(int key) {
+    	if (map.containsKey(key)){
+    		moveToHead(map.get(key));
+    		return map.get(key).val;
+    	} else {
+    		return -1;
+    	}
+    }
+    
+    
+    public void set(int key, int value) {
+    	if (map.containsKey(key)){
+    		DListNode cur = map.get(key);
+    		cur.val = value;
+    		moveToHead(cur);    		
+    	} else {
+    		DListNode newNode = new DListNode(key, value);
+    		map.put(key, newNode);
+    		if (curSize < capacity){ 
+    			curSize++;
+    			//update list    			
+    			if (head == null){
+    				head = newNode;
+    				tail = newNode;
+    			} else {
+    				newNode.next = head;
+    				head.prev = newNode;
+    				head = head.prev;
+    			}    			
+    		} else {
+    			// remove the lease recently used
+    			// remove from map
+    			map.remove(tail.key);
+    			
+    			// remove from list
+    			if (head == tail){
+    				head = newNode;
+    				tail = newNode;
+    			} else {
+    				tail = tail.prev;
+        			tail.next = null;
+        			newNode.next = head;
+        			head.prev = newNode;
+        			head = head.prev; 
+    			}
+    		}
+    	}        
+    }
+    
+    private void moveToHead(DListNode n){
+    	if (head == n) return;
+    	if (tail == n){
+    		tail = tail.prev;    		
+    		n.next = head;
+    		head.prev = n;
+    		head = head.prev;
+    		tail.next = null;
+    		head.prev = null;
+    		return;
+    	}
+    	n.prev.next = n.next;
+    	n.next.prev = n.prev;
+    	n.prev = null;
+    	n.next = head;
+    	head.prev = n;
+    	head = head.prev;
+    }
+}
