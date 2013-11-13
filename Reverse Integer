@@ -1,31 +1,19 @@
 public class Solution {
     public int reverse(int x) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        if (x == 0) return x;
-        boolean flag = true;
+        if (x == 0) return 0;
+        boolean signal = true;
         if (x < 0){
-            x = -x;
-            flag = false;
+            x *= -1;
+            signal = false;
         }
-        String str = Integer.toString(x);
         int result = 0;
-       
-        for (int i = 0; i < str.length(); i++){
-            result += Character.getNumericValue(str.charAt(i)) * Math.pow(10, i);
+        String s = String.valueOf(x);
+        for (int i = 0; i < s.length(); i++){
+            result += Character.getNumericValue(s.charAt(i)) * Math.pow(10, i) ;
         }
-        
-        if (flag == false){
-            return -1*result;
+        if (!signal){
+            result *= -1;
         }
         return result;
-            
-        
-        
-        
-       
-        
-        
-        
     }
 }
