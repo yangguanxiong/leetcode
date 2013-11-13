@@ -1,42 +1,38 @@
 public class Solution {
     public String minWindow(String S, String T) {
         String result = new String();
-        if (T.length() == 0 || S.length() == 0) return result;
-        
+        if (T.length() == 0 || S.length() < T.length()) return result;
         int[] need = new int[256];
         int[] found = new int[256];
         
-        for (int i = 0; i < T.length() ; i++){
+        for (int i = 0; i < T.length(); i++){
             need[T.charAt(i)]++;
         }
         int count = 0;
-        int rStart = -1; 
+        int rStart = -1;
         int rEnd = S.length();
         for (int start = 0, end = 0; end < S.length(); end++){
-            if(need[S.charAt(end)] == 0){
-                continue;
+            char c = S.charAt(end);
+            if (need[c] == 0) continue;
+            if (found[c] < need[c]) count++;
+            found[c]++;
+            if (count < T.length()) continue;
+            // update start
+            for ( ; start < end; start++){
+                char d = S.charAt(start);
+                if (need[d] == 0) continue;
+                if (found[d] == need[d] ) break;
+                found[d]--;
             }
-            if (found[S.charAt(end)] < need[S.charAt(end)]){
-                count++;
-            }
-            found[S.charAt(end)]++;
-            if (count != T.length()) continue;
-            //update start
-            for( ; start < end; start++){
-                if (need[S.charAt(start)] == 0) continue;
-                if (found[S.charAt(start)] <= need[S.charAt(start)]) break;
-                found[S.charAt(start)]--;
-            }
+            
             //update result
-            if (end - start < rEnd - rStart){
-                rEnd = end;
+            if (rEnd - rStart > end - start){
+                rEnd = end + 1;
                 rStart = start;
             }
         }
-        
         if (rStart == -1) return result;
-        result = S.substring(rStart, rEnd + 1);
+        result = S.substring(rStart, rEnd);
         return result;
-        
     }
 }
