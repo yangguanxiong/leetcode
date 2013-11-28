@@ -1,14 +1,9 @@
 public ListNode swapPairs(ListNode head) {
-        // Start typing your Java solution below
-        // DO NOT write main() function
-        
-        if ( head == null ) return null;
-        if ( head.next == null ) return head;
-        
-        ListNode subResult = swapPairs(head.next.next);
-        ListNode temp = head.next;
-        temp.next = head;
-        head.next = subResult;
-        return temp;
-        
+        if (head == null || head.next == null) return head;
+        ListNode sub = null;
+        if (head.next.next != null) sub = swapPairs(head.next.next);
+        ListNode newHead = head.next;
+        newHead.next = head;
+        head.next = sub;
+        return newHead;
     }
